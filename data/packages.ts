@@ -1,0 +1,443 @@
+export interface PackageItineraryDay {
+  day: number;
+  title: string;
+  description: string;
+  activities: string[];
+}
+
+export interface TourPackage {
+  id: string;
+  slug: string;
+  name: string;
+  destination: string;
+  destinationSlug: string;
+  category: "Domestic" | "International";
+  tripType: string[];
+  duration: string;
+  days: number;
+  nights: number;
+  startingPrice: string; // ₹XX,XXX format placeholder
+  image: string;
+  description: string;
+  highlights: string[];
+  inclusions: string[];
+  exclusions: string[];
+  hotelInfo: string;
+  transportInfo: string;
+  itinerary: PackageItineraryDay[];
+  featured: boolean;
+}
+
+export const tourPackagesData: TourPackage[] = [
+  {
+    id: "kashmir-escape",
+    slug: "kashmir-escape",
+    name: "Kashmir Paradise Escape",
+    destination: "Kashmir",
+    destinationSlug: "kashmir",
+    category: "Domestic",
+    tripType: ["Honeymoon", "Family", "Couples"],
+    duration: "6 Days / 5 Nights",
+    days: 6,
+    nights: 5,
+    startingPrice: "₹XX,XXX",
+    image: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1000&q=80",
+    description: "Immerse yourself in Srinagar's Dal Lake houseboats, Gulmarg's snow-clad slopes, Pahalgam's pine valleys, and Sonamarg glaciers with our expert trip assistance.",
+    highlights: [
+      "1 Night Stay in Traditional Dal Lake Houseboat",
+      "Complimentary Shikara Ride on Dal Lake",
+      "Gulmarg Gondola Ride Phase 1 & 2 Assistance",
+      "Excursion to Betaab Valley & Chandanwari in Pahalgam",
+      "Private Dedicated Cab for Entire Tour",
+    ],
+    inclusions: [
+      "Accommodation in top-rated 3-Star / 4-Star hotels",
+      "1 Night stay in Deluxe Houseboat Srinagar",
+      "Daily Breakfast & Dinner (MAP Plan)",
+      "Private Airport transfers & sightseeing cab",
+      "Shikara ride on Dal Lake (1 Hour)",
+      "Driver allowance, fuel, toll tax & parking charges",
+    ],
+    exclusions: [
+      "Flight or Train tickets (Available on request)",
+      "Gondola Cable Car tickets in Gulmarg",
+      "Pony / Horse rides & union cabs in Pahalgam / Sonamarg",
+      "Personal expenses, laundry, tips & beverages",
+      "5% GST / Government Taxes",
+    ],
+    hotelInfo: "Handpicked 3-Star & 4-Star premium hotels with mountain views, warm heating, and certified hygiene protocols.",
+    transportInfo: "Private Sedan / SUV (Dzire / Innova / Tempo Traveler) with experienced local mountain driver.",
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Srinagar & Dal Lake Shikara Ride",
+        description: "Arrive at Srinagar Airport where our representative welcomes you. Check into your hotel/houseboat. Enjoy a peaceful Shikara ride on Dal Lake during sunset.",
+        activities: ["Airport Pick-Up", "Houseboat Check-In", "Dal Lake Shikara Ride", "Sunset Photography"],
+      },
+      {
+        day: 2,
+        title: "Srinagar Local Sightseeing & Mughal Gardens",
+        description: "Explore the historic Mughal Gardens including Nishat Bagh, Shalimar Bagh, Chashme Shahi, and the famous Shankaracharya Temple overlooking the valley.",
+        activities: ["Nishat Bagh", "Shalimar Bagh", "Chashme Shahi", "Shankaracharya Temple Viewpoint"],
+      },
+      {
+        day: 3,
+        title: "Srinagar to Gulmarg Excursion",
+        description: "Drive to Gulmarg, the 'Meadow of Flowers'. Experience the world's second-highest Gondola cable car ride reaching Apharwat Peak.",
+        activities: ["Gondola Phase 1 & 2", "Snow Activities", "Golf Course Visit", "Return to Srinagar"],
+      },
+      {
+        day: 4,
+        title: "Srinagar to Pahalgam (Valley of Shepherds)",
+        description: "Drive through saffron fields and pine forests to Pahalgam. Visit Aru Valley, Betaab Valley, and Chandanwari along the Lidder River.",
+        activities: ["Saffron Fields Stop", "Betaab Valley", "Aru Valley", "Lidder River Walk"],
+      },
+      {
+        day: 5,
+        title: "Pahalgam to Sonamarg Day Trip",
+        description: "Visit Sonamarg, the 'Meadow of Gold'. Witness the majestic Thajiwas Glacier and flowing Sindh river.",
+        activities: ["Thajiwas Glacier Trek / Pony Ride", "Sindh River View", "Photography", "Overnight Srinagar"],
+      },
+      {
+        day: 6,
+        title: "Departure from Srinagar Airport",
+        description: "Enjoy breakfast, check out from the hotel, and take fond memories home as we drop you at Srinagar Airport.",
+        activities: ["Breakfast", "Souvenir Shopping", "Airport Drop-off"],
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: "manali-volvo-special",
+    slug: "manali-volvo-special",
+    name: "Manali & Solang Valley Holiday",
+    destination: "Manali & Himachal",
+    destinationSlug: "manali",
+    category: "Domestic",
+    tripType: ["Friends", "Couples", "Budget", "Family"],
+    duration: "5 Days / 4 Nights",
+    days: 5,
+    nights: 4,
+    startingPrice: "₹XX,XXX",
+    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1000&q=80",
+    description: "Experience the cool mountain air, adventure sports at Solang Valley, drive through Atal Tunnel, and explore Kullu river rafting.",
+    highlights: [
+      "Solang Valley Adventure & Paragliding Assistance",
+      "Scenic Drive through Atal Tunnel to Sissu",
+      "Kullu River Rafting & Shawl Factory Visit",
+      "Hadimba Temple & Old Manali Cafe Hopping",
+    ],
+    inclusions: [
+      "Accommodation in deluxe mountain view hotel",
+      "Daily Breakfast & Dinner",
+      "Sightseeing by private cab",
+      "Driver charges, fuel, parking & toll taxes",
+    ],
+    exclusions: [
+      "Adventure sports activities (Paragliding, Zip-lining)",
+      "Rohtang Pass permits / union cab fee",
+      "Personal expenses & GST",
+    ],
+    hotelInfo: "Cozy 3-Star mountain resort with balcony views of Beas river and pine hills.",
+    transportInfo: "Private Cab for local sightseeing & transfers.",
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Manali & Local Sightseeing",
+        description: "Check into your hotel. In the afternoon, visit Hadimba Devi Temple, Vashisht Hot Springs, Club House, and Mall Road.",
+        activities: ["Hotel Check-in", "Hadimba Temple", "Vashisht Springs", "Mall Road Evening Walk"],
+      },
+      {
+        day: 2,
+        title: "Solang Valley & Atal Tunnel Excursion",
+        description: "Head to Solang Valley for exhilarating sports like paragliding and zorbing. Drive through the historic Atal Tunnel to Sissu, Lahaul.",
+        activities: ["Solang Valley Sports", "Atal Tunnel Drive", "Sissu Waterfall Viewpoint"],
+      },
+      {
+        day: 3,
+        title: "Kullu Valley & Naggar Castle Visit",
+        description: "Explore the historic Naggar Castle and enjoy white water river rafting in Kullu along with local wooden handicraft shopping.",
+        activities: ["Naggar Castle", "Kullu River Rafting", "Shawl Factory Visit"],
+      },
+      {
+        day: 4,
+        title: "Kasol & Manikaran Sahib Day Tour",
+        description: "Visit Kasol, the Little Greece of India, and seek blessings at Manikaran Sahib Gurudwara hot springs.",
+        activities: ["Kasol Market", "Manikaran Sahib Gurudwara", "Hot Springs Dip"],
+      },
+      {
+        day: 5,
+        title: "Departure from Manali",
+        description: "Check out after breakfast with beautiful Himalayan memories.",
+        activities: ["Breakfast & Check-out", "Departure Transfer"],
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: "goa-beach-delight",
+    slug: "goa-beach-delight",
+    name: "Goa Sun & Beach Delight",
+    destination: "Goa",
+    destinationSlug: "goa",
+    category: "Domestic",
+    tripType: ["Friends", "Couples", "Honeymoon"],
+    duration: "4 Days / 3 Nights",
+    days: 4,
+    nights: 3,
+    startingPrice: "₹XX,XXX",
+    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80",
+    description: "Relax on golden sands, enjoy water sports at Baga Beach, take a romantic Mandovi River cruise, and explore historic North & South Goa.",
+    highlights: [
+      "Sunset Mandovi River Cruise with Live DJ",
+      "Water Sports Package at Baga Beach",
+      "North Goa Beaches & Fort Aguada Sightseeing",
+      "South Goa Heritage Churches & Mangueshi Temple",
+    ],
+    inclusions: [
+      "Accommodation in resort with swimming pool near beach",
+      "Daily Buffet Breakfast",
+      "Mandovi River Sunset Cruise Tickets",
+      "AC Cab for Airport Transfers & Sightseeing",
+    ],
+    exclusions: [
+      "Airfare / Train fare",
+      "Water sports charges unless specified",
+      "Lunch, dinner & nightlife club entries",
+    ],
+    hotelInfo: "3-Star / 4-Star boutique beach resort with pool and lush gardens.",
+    transportInfo: "Private AC Cab for transfers and guided tours.",
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Goa & Evening Leisure",
+        description: "Arrive at Goa Airport / Railway Station. Transfer to hotel and relax. Spend the evening strolling near the beach.",
+        activities: ["Airport Pickup", "Resort Check-In", "Beach Walk"],
+      },
+      {
+        day: 2,
+        title: "North Goa Beaches & Fort Aguada",
+        description: "Visit historic Fort Aguada, Calangute Beach, Baga Beach, Anjuna Beach, and Vagator Sunset Point.",
+        activities: ["Fort Aguada", "Calangute & Baga Beach", "Vagator Sunset"],
+      },
+      {
+        day: 3,
+        title: "South Goa Heritage & Sunset Cruise",
+        description: "Explore Old Goa Churches (Basilica of Bom Jesus), Mangueshi Temple, Miramar Beach, followed by a Mandovi River Cruise.",
+        activities: ["Basilica of Bom Jesus", "Mangueshi Temple", "Mandovi Sunset Cruise"],
+      },
+      {
+        day: 4,
+        title: "Departure from Goa",
+        description: "Breakfast at resort and departure transfer to Goa Airport / Station.",
+        activities: ["Breakfast", "Check-out & Transfer"],
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: "kerala-backwater-bliss",
+    slug: "kerala-backwater-bliss",
+    name: "Kerala Backwater & Tea Garden Bliss",
+    destination: "Kerala",
+    destinationSlug: "kerala",
+    category: "Domestic",
+    tripType: ["Family", "Honeymoon", "Couples"],
+    duration: "6 Days / 5 Nights",
+    days: 6,
+    nights: 5,
+    startingPrice: "₹XX,XXX",
+    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=80",
+    description: "Discover Munnar tea gardens, spice plantations of Thekkady, and spend a night floating through Alleppey backwaters on a private houseboat.",
+    highlights: [
+      "1 Night Luxury Private Houseboat Stay in Alleppey",
+      "Munnar Tea Estate Tour & Cheeyappara Waterfalls",
+      "Spice Plantation Walk & Kathakali Show in Thekkady",
+      "Full Board Meals on Houseboat (Breakfast, Lunch, Dinner)",
+    ],
+    inclusions: [
+      "Accommodation in hill view resorts & Alleppey houseboat",
+      "Daily Breakfast (All meals on Houseboat)",
+      "Private AC Cab for all sightseeing & transfers",
+      "Spice Garden entry ticket",
+    ],
+    exclusions: ["Flights / Trains", "Personal expenses & tips", "Ayurvedic massage charges"],
+    hotelInfo: "Premium hill resorts in Munnar & Deluxe Private Houseboat in Alleppey.",
+    transportInfo: "Private AC Sedan / SUV with courteous English/Hindi speaking driver.",
+    itinerary: [
+      {
+        day: 1,
+        title: "Cochin to Munnar Drive",
+        description: "Pick up from Cochin Airport/Station. Drive to Munnar enjoying Cheeyappara & Valara Waterfalls en route.",
+        activities: ["Cochin Pick-Up", "Cheeyappara Waterfalls", "Munnar Check-in"],
+      },
+      {
+        day: 2,
+        title: "Munnar Tea Gardens & Eravikulam National Park",
+        description: "Visit Eravikulam National Park (Nilgiri Tahr), Mattupetty Dam, Echo Point, and Tea Museum.",
+        activities: ["Eravikulam Park", "Mattupetty Dam", "Echo Point", "Tea Factory"],
+      },
+      {
+        day: 3,
+        title: "Munnar to Thekkady (Periyar Wildlife)",
+        description: "Drive to Thekkady. Take a spice plantation tour and boat ride on Periyar Lake.",
+        activities: ["Spice Plantation Tour", "Periyar Boat Safari", "Kathakali Show"],
+      },
+      {
+        day: 4,
+        title: "Thekkady to Alleppey Houseboat Stay",
+        description: "Check into your private houseboat at 12 PM. Cruise through lush backwaters with freshly cooked Keralite meals.",
+        activities: ["Houseboat Check-in", "Backwater Cruise", "Sunset View", "Onboard Dinner"],
+      },
+      {
+        day: 5,
+        title: "Alleppey to Kovalam / Cochin Beach",
+        description: "Check out from houseboat after breakfast and head to Kovalam beach / Fort Kochi heritage walk.",
+        activities: ["Fort Kochi Chinese Fishing Nets", "Jew Town Walk", "Beach Relaxing"],
+      },
+      {
+        day: 6,
+        title: "Departure from Cochin Airport",
+        description: "Breakfast and drop at Cochin Airport for return flight.",
+        activities: ["Breakfast", "Airport Drop-off"],
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: "dubai-glamour-tour",
+    slug: "dubai-glamour-tour",
+    name: "Dubai Glamour & Desert Adventure",
+    destination: "Dubai",
+    destinationSlug: "dubai",
+    category: "International",
+    tripType: ["Family", "Couples", "Luxury"],
+    duration: "5 Days / 4 Nights",
+    days: 5,
+    nights: 4,
+    startingPrice: "₹XX,XXX",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=80",
+    description: "Witness the magnificent Burj Khalifa, enjoy thrill-packed Desert Safari with BBQ dinner, Marina Dhow Cruise, and Miracle Garden.",
+    highlights: [
+      "Burj Khalifa 124th Floor Observation Deck Ticket",
+      "Desert Safari in 4x4 Land Cruiser with BBQ Dinner & Belly Dance",
+      "Dubai Marina Sunset / Evening Dhow Cruise",
+      "Half-day Dubai City Guided Tour & Gold Souk Visit",
+    ],
+    inclusions: [
+      "4 Nights accommodation in 4-Star Dubai city hotel",
+      "Daily Buffet Breakfast",
+      "Desert Safari with Dune Bashing & BBQ",
+      "Burj Khalifa At The Top entry ticket",
+      "UAE Tourist Visa Assistance & Insurance",
+      "Return Dubai Airport Transfers on Shared/Private basis",
+    ],
+    exclusions: ["Airfare", "Tourism Dirham Fee (Payable directly at hotel)", "Personal shopping & expenses"],
+    hotelInfo: "Modern 4-Star hotel near Bur Dubai / Deira / Al Barsha.",
+    transportInfo: "Comfortable AC coaches / private transfers for tours.",
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Dubai & Marina Dhow Cruise",
+        description: "Arrive at Dubai International Airport. Transfer to hotel. In the evening, enjoy a romantic Marina Dhow Cruise with dinner.",
+        activities: ["Airport Pick-up", "Hotel Check-in", "Marina Dhow Cruise & Dinner"],
+      },
+      {
+        day: 2,
+        title: "Dubai City Tour & Burj Khalifa 124th Floor",
+        description: "Explore Jumeirah Mosque, Dubai Frame photo stop, Burj Al Arab view, followed by Dubai Mall and Burj Khalifa observation deck.",
+        activities: ["City Tour", "Jumeirah Beach", "Dubai Mall Fountain Show", "Burj Khalifa 124th Floor"],
+      },
+      {
+        day: 3,
+        title: "Shopping Morning & Desert Safari Evening",
+        description: "Morning free for Gold Souk / Meena Bazaar shopping. In the afternoon, head out for 4x4 Desert Dune Bashing with camp performances.",
+        activities: ["Gold Souk Shopping", "Desert Dune Bashing", "Camel Ride", "BBQ Dinner & Live Shows"],
+      },
+      {
+        day: 4,
+        title: "Miracle Garden & Global Village (Seasonal)",
+        description: "Visit the stunning Dubai Miracle Garden featuring millions of blooming flowers and cultural pavillions at Global Village.",
+        activities: ["Miracle Garden", "Global Village Tour", "Local Dining"],
+      },
+      {
+        day: 5,
+        title: "Departure from Dubai",
+        description: "Breakfast, free time for last-minute shopping, and airport drop-off.",
+        activities: ["Breakfast", "Airport Transfer"],
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: "bali-romantic-honeymoon",
+    slug: "bali-romantic-honeymoon",
+    name: "Bali Romantic Villa & Island Magic",
+    destination: "Bali",
+    destinationSlug: "bali",
+    category: "International",
+    tripType: ["Honeymoon", "Couples"],
+    duration: "6 Days / 5 Nights",
+    days: 6,
+    nights: 5,
+    startingPrice: "₹XX,XXX",
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=80",
+    description: "Romantic Bali getaway featuring private pool villa stay, Kintamani volcano views, Bali swing, Nusa Penida island speedboat tour, and Uluwatu sunset.",
+    highlights: [
+      "2 Nights Stay in Luxury Private Pool Villa in Ubud",
+      "Complimentary Floating Breakfast in Villa",
+      "Nusa Penida Island Tour (Kelingking Beach & Broken Beach)",
+      "Ubud Swing & Tegallalang Rice Terrace Tour",
+      "Uluwatu Sunset Temple & Kecak Dance Show",
+    ],
+    inclusions: [
+      "3 Nights Deluxe Hotel Kuta/Seminyak + 2 Nights Private Pool Villa Ubud",
+      "Daily Breakfast + 1 Floating Breakfast",
+      "Full Day Nusa Penida Tour with Speedboat & Lunch",
+      "Private AC Car for all land transfers & tours",
+      "Flower bath & honeymoon bed setup in villa",
+    ],
+    exclusions: ["Airfare", "Indonesian Visa on Arrival (VoA)", "Personal expenses & tips"],
+    hotelInfo: "4-Star Beach Resort in Seminyak + 5-Star Private Pool Villa in Ubud.",
+    transportInfo: "Private AC Car with friendly English-speaking driver guide.",
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Bali (Denpasar) & Transfer to Kuta",
+        description: "Welcome at Bali Airport. Transfer to your beach resort. Evening free to explore Kuta beach and local markets.",
+        activities: ["Airport Pick-up", "Hotel Check-in", "Kuta Beach Evening"],
+      },
+      {
+        day: 2,
+        title: "Full Day Nusa Penida Island Tour",
+        description: "Speedboat ride to Nusa Penida. Visit iconic Kelingking T-Rex Beach, Broken Beach, Angel's Billabong, and Crystal Bay.",
+        activities: ["Speedboat Transfer", "Kelingking Beach", "Broken Beach", "Angel's Billabong"],
+      },
+      {
+        day: 3,
+        title: "Uluwatu Sunset & Kecak Dance",
+        description: "Morning relaxing. Afternoon visit to Pandawa Beach and the famous Uluwatu Temple perched on a 70m cliff over the ocean.",
+        activities: ["Pandawa Beach", "Uluwatu Clifftop Temple", "Kecak Fire Dance Show"],
+      },
+      {
+        day: 4,
+        title: "Transfer to Ubud Villa & Bali Swing",
+        description: "Check out and head to Ubud. Stop at Bali Swing overlooking palm trees and Tegallalang Rice Terraces.",
+        activities: ["Bali Swing Experience", "Tegallalang Rice Terrace", "Private Pool Villa Check-in"],
+      },
+      {
+        day: 5,
+        title: "Kintamani Volcano & Ubud Craft Villages",
+        description: "Enjoy floating breakfast. Tour Kintamani Batur volcano view, Tampak Siring holy water temple, and Ubud Monkey Forest.",
+        activities: ["Floating Breakfast", "Kintamani Volcano View", "Tirta Empul Holy Temple", "Ubud Market"],
+      },
+      {
+        day: 6,
+        title: "Departure from Bali",
+        description: "Relax in villa, check out, and private transfer to Denpasar Airport.",
+        activities: ["Breakfast", "Souvenir Shopping", "Airport Transfer"],
+      },
+    ],
+    featured: true,
+  },
+];
