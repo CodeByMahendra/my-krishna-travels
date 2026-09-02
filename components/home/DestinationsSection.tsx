@@ -34,12 +34,12 @@ export default function DestinationsSection() {
           </p>
 
           {/* Category Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+          <div className="flex items-center justify-start sm:justify-center gap-2 pt-4 overflow-x-auto pb-1 max-w-full no-scrollbar">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveTab(cat)}
-                className={`px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shrink-0 transition-all duration-200 ${
                   activeTab === cat
                     ? "bg-primary-blue text-white shadow-xs"
                     : "bg-white text-brand-dark hover:bg-slate-100 border border-brand-border"

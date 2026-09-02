@@ -33,7 +33,7 @@ export default function HeroSection() {
             </div>
 
             <div className="space-y-3">
-              <h1 className="text-[38px] sm:text-[52px] lg:text-[60px] font-black tracking-tight leading-[1.1] text-white drop-shadow-md">
+              <h1 className="text-[30px] sm:text-[48px] lg:text-[60px] font-black tracking-tight leading-[1.15] sm:leading-[1.1] text-white drop-shadow-md">
                 Your Journey, <br />
                 <span className="text-amber-400">
                   Our Responsibility.

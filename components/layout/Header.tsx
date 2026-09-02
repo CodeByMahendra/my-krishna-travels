@@ -153,47 +153,55 @@ export default function Header() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[60px] bg-white border-b border-slate-200 shadow-xl z-50 animate-in slide-in-from-top duration-200 max-h-[calc(100vh-65px)] overflow-y-auto">
-          <div className="px-4 pt-3 pb-6 space-y-1.5">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
+        <>
+          {/* Overlay backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 top-[56px] bg-black/50 backdrop-blur-xs z-40 animate-in fade-in duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+
+          <div className="lg:hidden fixed inset-x-0 top-[56px] bg-white z-50 shadow-2xl border-b border-slate-200 animate-in slide-in-from-top duration-250 max-h-[calc(100vh-65px)] overflow-y-auto rounded-b-2xl">
+            <div className="px-5 pt-4 pb-8 space-y-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`flex items-center justify-between px-4 py-3 text-base font-bold rounded-xl transition-all ${
+                      isActive
+                        ? "text-primary-blue bg-light-blue shadow-xs"
+                        : "text-slate-800 hover:bg-slate-50 hover:text-primary-blue"
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    {link.badge && (
+                      <span className="px-2 py-0.5 text-[10px] uppercase font-extrabold bg-brand-red text-white rounded-md shadow-xs">
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+
+              <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
                 <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold rounded-md ${
-                    isActive
-                      ? "text-primary-blue font-bold bg-light-blue"
-                      : "text-slate-700 hover:bg-slate-50 hover:text-primary-blue"
-                  }`}
+                  href="/customize"
+                  className="w-full bg-primary-blue hover:bg-primary-hover text-white font-bold h-[48px] rounded-xl flex items-center justify-center gap-2 text-sm shadow-md active:scale-[0.98]"
                 >
-                  <span>{link.name}</span>
-                  {link.badge && (
-                    <span className="px-2 py-0.5 text-[10px] font-bold bg-brand-red text-white rounded">
-                      {link.badge}
-                    </span>
-                  )}
+                  <Compass className="w-5 h-5 text-amber-300" />
+                  <span>Plan My Trip</span>
                 </Link>
-              );
-            })}
+                <WhatsAppButton variant="accent" text="WhatsApp Us" source="MobileDrawer" className="w-full h-[48px] rounded-xl text-sm font-bold shadow-md" />
+              </div>
 
-            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
-              <Link
-                href="/customize"
-                className="w-full bg-primary-blue hover:bg-primary-hover text-white text-center font-semibold h-[42px] rounded-[6px] flex items-center justify-center gap-2 text-sm shadow-xs"
-              >
-                <Compass className="w-4 h-4" />
-                <span>Plan My Trip</span>
-              </Link>
-              <WhatsAppButton variant="accent" text="WhatsApp Us" source="MobileDrawer" className="w-full h-[42px] rounded-[6px] text-sm" />
-            </div>
-
-            <div className="pt-3 text-xs text-brand-muted space-y-1 text-center font-normal">
-              <p>Call Us: <strong className="text-navy">{siteConfig.phoneNumber}</strong></p>
-              <p>Email: <strong className="text-navy">{siteConfig.contactEmail}</strong></p>
+              <div className="pt-4 text-xs text-slate-500 space-y-1.5 text-center font-medium bg-slate-50 p-3 rounded-xl border border-slate-100 mt-2">
+                <p>📞 Call Support: <a href={`tel:${siteConfig.phoneNumber}`} className="text-navy font-bold hover:underline">{siteConfig.phoneNumber}</a></p>
+                <p>✉️ Email: <a href={`mailto:${siteConfig.contactEmail}`} className="text-navy font-bold hover:underline">{siteConfig.contactEmail}</a></p>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
