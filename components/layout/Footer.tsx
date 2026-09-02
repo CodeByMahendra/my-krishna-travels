@@ -12,13 +12,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
           {/* Column 1: Logo & Overview */}
           <div className="space-y-4">
-            <div className="bg-white p-3 rounded-[8px] inline-block shadow-sm">
-              <div className="relative h-11 w-48">
+            <div className="bg-white p-2.5 rounded-[8px] inline-block shadow-sm">
+              <div className="relative h-13 w-52 sm:h-14 sm:w-56">
                 <Image
                   src="/images/logo.png"
                   alt="My Krishna Travels.in"
                   fill
-                  className="object-contain"
+                  className="object-contain object-left"
                 />
               </div>
             </div>

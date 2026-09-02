@@ -40,7 +40,7 @@ export const tourPackagesData: TourPackage[] = [
     duration: "6 Days / 5 Nights",
     days: 6,
     nights: 5,
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹14,999",
     image: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1000&q=80",
     description: "Immerse yourself in Srinagar's Dal Lake houseboats, Gulmarg's snow-clad slopes, Pahalgam's pine valleys, and Sonamarg glaciers with our expert trip assistance.",
     highlights: [
@@ -118,7 +118,7 @@ export const tourPackagesData: TourPackage[] = [
     duration: "5 Days / 4 Nights",
     days: 5,
     nights: 4,
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹8,999",
     image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1000&q=80",
     description: "Experience the cool mountain air, adventure sports at Solang Valley, drive through Atal Tunnel, and explore Kullu river rafting.",
     highlights: [
@@ -185,7 +185,7 @@ export const tourPackagesData: TourPackage[] = [
     duration: "4 Days / 3 Nights",
     days: 4,
     nights: 3,
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹7,499",
     image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80",
     description: "Relax on golden sands, enjoy water sports at Baga Beach, take a romantic Mandovi River cruise, and explore historic North & South Goa.",
     highlights: [
@@ -246,7 +246,7 @@ export const tourPackagesData: TourPackage[] = [
     duration: "6 Days / 5 Nights",
     days: 6,
     nights: 5,
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹13,500",
     image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=80",
     description: "Discover Munnar tea gardens, spice plantations of Thekkady, and spend a night floating through Alleppey backwaters on a private houseboat.",
     highlights: [
@@ -315,7 +315,7 @@ export const tourPackagesData: TourPackage[] = [
     duration: "5 Days / 4 Nights",
     days: 5,
     nights: 4,
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹39,999",
     image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=80",
     description: "Witness the magnificent Burj Khalifa, enjoy thrill-packed Desert Safari with BBQ dinner, Marina Dhow Cruise, and Miracle Garden.",
     highlights: [
@@ -380,7 +380,7 @@ export const tourPackagesData: TourPackage[] = [
     duration: "6 Days / 5 Nights",
     days: 6,
     nights: 5,
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹28,500",
     image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=80",
     description: "Romantic Bali getaway featuring private pool villa stay, Kintamani volcano views, Bali swing, Nusa Penida island speedboat tour, and Uluwatu sunset.",
     highlights: [

@@ -30,7 +30,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "March to October (Summer & Autumn) | Dec to Feb (Snow/Skiing)",
     idealDuration: "5 to 7 Days",
     keyAttractions: ["Dal Lake Shikara Ride", "Gulmarg Gondola Cable Car", "Betaab Valley Pahalgam", "Sonamarg Glacier"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹14,999",
   },
   {
     id: "manali",
@@ -46,7 +46,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "October to June",
     idealDuration: "4 to 6 Days",
     keyAttractions: ["Solang Valley Sports", "Atal Tunnel", "Rohtang Pass", "Hadimba Temple", "Old Manali Cafes"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹8,999",
   },
   {
     id: "goa",
@@ -62,7 +62,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "November to February",
     idealDuration: "3 to 5 Days",
     keyAttractions: ["Baga & Calangute Beaches", "Dudsagar Waterfalls", "Mandovi Sunset Cruise", "Fontainhas Latin Quarter"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹7,499",
   },
   {
     id: "kerala",
@@ -78,7 +78,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "September to March",
     idealDuration: "5 to 7 Days",
     keyAttractions: ["Alleppey Houseboat Stay", "Munnar Tea Gardens", "Thekkady Elephant Reserve", "Kovalam Beach"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹13,500",
   },
   {
     id: "rajasthan",
@@ -94,7 +94,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "October to March",
     idealDuration: "6 to 9 Days",
     keyAttractions: ["Amber Fort Jaipur", "City Palace Udaipur", "Jaisalmer Desert Safari", "Jodhpur Blue City"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹11,999",
   },
   {
     id: "uttarakhand",
@@ -110,7 +110,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "March to June | Sept to Nov",
     idealDuration: "4 to 7 Days",
     keyAttractions: ["Rishikesh River Rafting", "Nainital Naini Lake", "Mussoorie Mall Road", "Kedarnath & Badrinath"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹9,499",
   },
   {
     id: "dubai",
@@ -126,7 +126,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "November to April",
     idealDuration: "4 to 6 Days",
     keyAttractions: ["Burj Khalifa 124th Floor", "Desert Safari with BBQ", "Dubai Mall & Fountain Show", "Miracle Garden"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹39,999",
   },
   {
     id: "bali",
@@ -142,7 +142,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "April to October",
     idealDuration: "5 to 8 Days",
     keyAttractions: ["Tegallalang Rice Terraces", "Tanah Lot Temple", "Nusa Penida Island Tour", "Ubud Monkey Forest"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹28,500",
   },
   {
     id: "thailand",
@@ -158,7 +158,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "November to April",
     idealDuration: "5 to 7 Days",
     keyAttractions: ["Phi Phi Island Speedboat Tour", "Coral Island Pattaya", "Grand Palace Bangkok", "Floating Markets"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹24,999",
   },
   {
     id: "maldives",
@@ -174,7 +174,7 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "November to April",
     idealDuration: "4 to 5 Days",
     keyAttractions: ["Overwater Bungalow Stay", "Snorkeling with Sea Turtles", "Sunset Dolphin Cruise", "Private Beach Dinner"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹54,999",
   },
   {
     id: "singapore",
@@ -190,6 +190,6 @@ export const destinationsData: Destination[] = [
     bestTimeToVisit: "Year-Round",
     idealDuration: "4 to 6 Days",
     keyAttractions: ["Universal Studios Singapore", "Gardens by the Bay Light Show", "Sentosa Cable Car", "Night Safari"],
-    startingPrice: "₹XX,XXX",
+    startingPrice: "₹34,500",
   },
 ];

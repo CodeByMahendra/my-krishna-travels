@@ -75,10 +75,10 @@ export default function Header() {
             : "border-b border-slate-100 py-3 md:py-3.5"
         }`}
       >
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[48px] md:h-[52px]">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[56px] md:h-[64px]">
           {/* LEFT: Official Brand Logo */}
           <Link href="/" className="flex items-center shrink-0">
-            <div className="relative h-9 w-40 sm:h-10 sm:w-44 overflow-hidden flex items-center">
+            <div className="relative h-11 w-44 sm:h-13 sm:w-52 flex items-center">
               <Image
                 src="/images/logo.png"
                 alt="My Krishna Travels.in"
