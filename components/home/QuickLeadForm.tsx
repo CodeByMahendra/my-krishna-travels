@@ -23,19 +23,34 @@ export default function QuickLeadForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     const utm = getStoredUTMParams();
-    const payload = { ...formData, ...utm };
+    const payload = { ...formData, ...utm, formSource: "Quick Lead Form (Homepage)" };
 
+    // Track analytics lead event
     trackLead(payload);
 
-    setTimeout(() => {
+    // Instant Smart WhatsApp Redirect
+    const waLink = getEnquiryWhatsAppLink(formData);
+    trackWhatsAppClick("QuickLeadFormAutoRedirect");
+    window.open(waLink, "_blank");
+
+    try {
+      // Send email notification to business owner in parallel
+      await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error("Failed to send email notification:", error);
+    } finally {
       setLoading(false);
       setSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleWhatsAppDirect = () => {

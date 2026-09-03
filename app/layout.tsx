@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import MetaAnalytics from "@/components/common/MetaAnalytics";
+import SocialProofTicker from "@/components/common/SocialProofTicker";
 import { siteConfig } from "@/lib/config";
 
 const manrope = Manrope({
@@ -77,6 +78,7 @@ export default function RootLayout({
         <Footer />
         <MobileStickyBar />
         <WhatsAppButton variant="floating" source="FloatingButton" />
+        <SocialProofTicker />
       </body>
     </html>
   );
