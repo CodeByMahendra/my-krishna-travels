@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Send, CheckCircle2, MessageCircle } from "lucide-react";
-import { getWhatsAppLink } from "@/lib/whatsapp";
+import { getWhatsAppLink, getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
 
@@ -24,17 +24,39 @@ export default function ContactForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     const utm = getStoredUTMParams();
-    trackLead({ ...formData, ...utm, form: "ContactUsPage" });
+    const payload = { ...formData, ...utm, formSource: "Contact Us Page Form" };
 
-    setTimeout(() => {
+    trackLead({ ...payload, form: "ContactUsPage" });
+
+    // Instant Smart WhatsApp Redirect
+    const waLink = getEnquiryWhatsAppLink({
+      name: formData.name,
+      phone: formData.phone,
+      destination: formData.destination,
+      date: formData.date,
+      travellers: formData.travellers,
+      message: formData.message,
+    });
+    trackWhatsAppClick("ContactFormAutoRedirect");
+    window.open(waLink, "_blank");
+
+    try {
+      await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error("Failed to send email notification:", error);
+    } finally {
       setLoading(false);
       setSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleWhatsApp = () => {

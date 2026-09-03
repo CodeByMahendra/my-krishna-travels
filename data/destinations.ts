@@ -17,6 +17,22 @@ export interface Destination {
 
 export const destinationsData: Destination[] = [
   {
+    id: "ujjain-indore-omkareshwar",
+    slug: "ujjain-indore-omkareshwar",
+    name: "Ujjain, Indore & Omkareshwar",
+    subtitle: "Mahakal Lok & Sacred Jyotirlinga Circuit",
+    category: "Domestic",
+    tags: ["Pilgrimage", "Mahakal Lok", "Jyotirlinga", "Culture", "Food & Heritage"],
+    image: "https://images.unsplash.com/photo-1627894483216-2138af692e32?auto=format&fit=crop&w=1000&q=80",
+    popular: true,
+    shortDescription: "Divine Mahakaleshwar Bhasma Aarti, Shri Mahakal Lok Corridor, Omkareshwar Jyotirlinga & Indore's world-famous Sarafa food market.",
+    fullDescription: "Experience Madhya Pradesh's most revered spiritual journey. Visit Mahakaleshwar Temple in Ujjain with the grand Shri Mahakal Lok Corridor, sacred Omkareshwar & Mamleshwar Jyotirlinga on the Narmada banks, combined with Indore's royal Rajwada Palace and vibrant Sarafa Night Food Market.",
+    bestTimeToVisit: "October to March (Winter) | Mahashivratri",
+    idealDuration: "3 to 5 Days",
+    keyAttractions: ["Shri Mahakal Lok Corridor Ujjain", "Mahakaleshwar Bhasma Aarti", "Omkareshwar & Mamleshwar Jyotirlinga", "Indore Sarafa Night Food Market", "Rajwada Palace & Chhatris"],
+    startingPrice: "₹6,999",
+  },
+  {
     id: "kashmir",
     slug: "kashmir",
     name: "Kashmir",

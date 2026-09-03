@@ -55,19 +55,46 @@ export default function CustomizeTripForm() {
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 6));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     const utm = getStoredUTMParams();
-    const payload = { ...formData, ...utm };
+    const payload = {
+      ...formData,
+      ...utm,
+      date: formData.travelDates,
+      message: `Duration: ${formData.duration} | Style: ${formData.tripType} | Notes: ${formData.notes || "None"}`,
+      formSource: "Customized Trip Wizard",
+    };
 
     trackLead(payload);
 
-    setTimeout(() => {
+    // Instant Smart WhatsApp Redirect
+    const waLink = getEnquiryWhatsAppLink({
+      name: formData.name,
+      phone: formData.phone,
+      destination: formData.destination,
+      date: formData.travelDates,
+      travellers: formData.travellers,
+      budget: formData.budget,
+      message: `Duration: ${formData.duration}, Style: ${formData.tripType}`,
+    });
+    trackWhatsAppClick("CustomizeWizardAutoRedirect");
+    window.open(waLink, "_blank");
+
+    try {
+      await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error("Failed to send email notification:", error);
+    } finally {
       setLoading(false);
       setSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleWhatsApp = () => {

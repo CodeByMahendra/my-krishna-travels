@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/common/Breadcrumbs";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import QuickLeadForm from "@/components/home/QuickLeadForm";
 import FinalCTA from "@/components/home/FinalCTA";
+import DownloadItineraryButton from "@/components/packages/DownloadItineraryButton";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -86,8 +87,10 @@ export default async function PackageDetailPage({ params }: Props) {
                   text="WhatsApp Us"
                   message={`Hi My Krishna Travels, I am interested in the "${pkg.name}" package. Please share itinerary & price.`}
                   source={`PackageDetail-${pkg.slug}`}
-                  className="h-[48px] px-6 rounded-[8px] text-xs sm:text-sm active:scale-[0.98]"
+                  className="h-[48px] px-6 rounded-[8px] text-xs sm:text-base active:scale-[0.98]"
                 />
+
+                <DownloadItineraryButton pkg={pkg} variant="outline" />
               </div>
             </div>
 

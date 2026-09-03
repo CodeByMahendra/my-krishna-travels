@@ -44,14 +44,19 @@ export function getEnquiryWhatsAppLink(data: {
   date?: string;
   travellers?: string;
   budget?: string;
+  phone?: string;
+  message?: string;
 }): string {
-  let text = `Hi My Krishna Travels, I would like to get a quote for a trip:\n`;
-  if (data.name) text += `• Name: ${data.name}\n`;
-  if (data.destination) text += `• Destination: ${data.destination}\n`;
-  if (data.date) text += `• Travel Date: ${data.date}\n`;
-  if (data.travellers) text += `• Travellers: ${data.travellers}\n`;
-  if (data.budget) text += `• Budget: ${data.budget}\n`;
-  text += `Please get in touch with me with a customized itinerary.`;
+  let text = `🙏 *Namaste My Krishna Travels!*\n\n`;
+  text += `I would like to plan a trip with you. Here are my details:\n\n`;
+  if (data.name) text += `👤 *Name:* ${data.name}\n`;
+  if (data.destination) text += `📍 *Destination:* ${data.destination}\n`;
+  if (data.date) text += `📅 *Travel Date:* ${data.date}\n`;
+  if (data.travellers) text += `👥 *Travellers:* ${data.travellers}\n`;
+  if (data.budget) text += `💰 *Budget:* ${data.budget}\n`;
+  if (data.phone) text += `📞 *Phone / WhatsApp:* ${data.phone}\n`;
+  if (data.message) text += `📝 *Notes:* ${data.message}\n`;
+  text += `\nPlease share the customized itinerary and best quote with me. Thank you!`;
 
   return getWhatsAppLink(text);
 }

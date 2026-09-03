@@ -1,6 +1,7 @@
 import React from "react";
 import HeroSection from "@/components/home/HeroSection";
 import DestinationsSection from "@/components/home/DestinationsSection";
+import TripCostCalculator from "@/components/home/TripCostCalculator";
 import PackagesSection from "@/components/home/PackagesSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import HowItWorks from "@/components/home/HowItWorks";
@@ -16,6 +17,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <DestinationsSection />
+      <TripCostCalculator />
       <PackagesSection />
       <WhyChooseUs />
       <HowItWorks />
