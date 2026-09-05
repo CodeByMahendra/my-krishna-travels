@@ -48,13 +48,14 @@ export default function HeroSection() {
               From weekend getaways to complete family holidays, we create customized travel experiences designed around your destination, budget and preferences.
             </p>
 
-            {/* CTAs matching screenshot */}
+            {/* CTAs */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
               <Link
                 href="/customize"
-                className="w-full sm:w-auto bg-brand-red hover:bg-brand-red-dark text-white text-base font-extrabold h-[50px] px-8 rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg active:scale-[0.98]"
+                className="group relative overflow-hidden w-full sm:w-auto bg-gradient-to-r from-brand-red to-red-600 hover:from-brand-red-dark hover:to-brand-red text-white text-base font-extrabold h-[50px] px-8 rounded-2xl transition-all flex items-center justify-center gap-2.5 shadow-[0_4px_16px_rgba(227,38,46,0.38)] active:scale-[0.98]"
               >
-                <Compass className="w-5 h-5" />
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out pointer-events-none" />
+                <Compass className="w-5 h-5 text-amber-300 group-hover:rotate-45 transition-transform duration-300" />
                 <span>Plan My Trip</span>
               </Link>
 
@@ -62,7 +63,7 @@ export default function HeroSection() {
                 variant="accent"
                 text="WhatsApp Us"
                 source="HeroSection"
-                className="w-full sm:w-auto h-[50px] px-7 text-base rounded-2xl font-bold shadow-lg"
+                className="w-full sm:w-auto h-[50px] px-7 text-base rounded-2xl font-bold shadow-[0_4px_16px_rgba(37,211,102,0.38)]"
               />
             </div>
 

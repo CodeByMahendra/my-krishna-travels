@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, MessageCircle, Send, CheckCircle2, MapPin } from "lucide-react";
+import { Sparkles, Send, CheckCircle2, MapPin } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
+import DestinationAutocomplete from "@/components/common/DestinationAutocomplete";
 import { getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
@@ -94,7 +96,7 @@ export default function QuickLeadForm() {
               onClick={handleWhatsAppDirect}
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-[48px] rounded-xl flex items-center justify-center gap-2 transition-all shadow-md text-sm"
             >
-              <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+              <WhatsAppIcon className="w-4 h-4 text-white" />
               <span>Connect Immediately on WhatsApp</span>
             </button>
             <button
@@ -143,18 +145,12 @@ export default function QuickLeadForm() {
               <label className="block text-xs font-bold text-slate-700 mb-1">
                 Where to? (Destination) *
               </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  name="destination"
-                  required
-                  placeholder="Kashmir, Manali, Dubai..."
-                  value={formData.destination}
-                  onChange={handleChange}
-                  className="w-full h-[46px] pl-9 pr-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-sm font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
-                />
-                <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              </div>
+              <DestinationAutocomplete
+                value={formData.destination}
+                onChange={(val) => setFormData((prev) => ({ ...prev, destination: val }))}
+                placeholder="City, State, Country..."
+                className="w-full text-xs"
+              />
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
@@ -225,7 +221,7 @@ export default function QuickLeadForm() {
               onClick={handleWhatsAppDirect}
               className="w-full bg-white hover:bg-slate-50 border border-slate-200 text-emerald-600 font-bold h-[44px] rounded-xl flex items-center justify-center gap-2 transition-all text-xs sm:text-sm active:scale-[0.98]"
             >
-              <MessageCircle className="w-4 h-4 fill-emerald-600 stroke-none" />
+              <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
               <span>Chat on WhatsApp</span>
             </button>
           </div>

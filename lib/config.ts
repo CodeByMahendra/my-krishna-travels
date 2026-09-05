@@ -5,11 +5,11 @@ export const siteConfig = {
   description: "From weekend getaways to complete family holidays, we create customized travel experiences designed around your destination, budget and preferences.",
   website: "https://mykrishnatravels.in",
   domain: "MyKrishnaTravels.in",
-  
+
   // Central Contact Configuration (Configurable via environment variables)
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919876543210",
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918964906436",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@mykrishnatravels.in",
-  phoneNumber: process.env.NEXT_PUBLIC_PHONE_NUMBER || "+91 98765 43210",
+  phoneNumber: process.env.NEXT_PUBLIC_PHONE_NUMBER || "+91 89649 06436",
   businessAddress: process.env.NEXT_PUBLIC_BUSINESS_ADDRESS || "101, Travel Plaza, Main Road, New Delhi, India - 110001",
   businessHours: "Mon - Sat: 9:00 AM - 8:00 PM | Sun: 10:00 AM - 5:00 PM",
 
@@ -21,7 +21,7 @@ export const siteConfig = {
   socials: {
     instagram: "https://instagram.com/mykrishnatravels.in",
     facebook: "https://facebook.com/mykrishnatravels.in",
-    whatsapp: "https://wa.me/919876543210",
+    whatsapp: "https://wa.me/918964906436",
     youtube: "https://youtube.com/@mykrishnatravels",
   },
 

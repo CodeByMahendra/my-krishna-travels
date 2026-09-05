@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, MessageCircle, Instagram, Facebook } from "lucide-react";
+import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import { siteConfig } from "@/lib/config";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
@@ -51,7 +52,7 @@ export default function Footer() {
                 aria-label="WhatsApp"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-whatsapp flex items-center justify-center text-slate-200 hover:text-white transition-colors"
               >
-                <MessageCircle className="w-4 h-4" />
+                <WhatsAppIcon className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -165,7 +166,7 @@ export default function Footer() {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <MessageCircle className="w-4 h-4 text-brand-whatsapp mt-1 shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 text-brand-whatsapp mt-1 shrink-0" />
                 <div>
                   <p className="text-slate-400 text-xs">WhatsApp Support:</p>
                   <a

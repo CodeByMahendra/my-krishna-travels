@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Send, CheckCircle2, MessageCircle } from "lucide-react";
+import { Send, CheckCircle2 } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import { getWhatsAppLink, getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
@@ -87,7 +88,7 @@ export default function ContactForm() {
               onClick={handleWhatsApp}
               className="w-full bg-brand-whatsapp hover:bg-brand-whatsappHover text-white font-semibold h-[46px] rounded-[8px] flex items-center justify-center gap-2 shadow-xs transition-colors active:scale-[0.98] text-xs sm:text-sm"
             >
-              <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+              <WhatsAppIcon className="w-4 h-4 text-white" />
               <span>Chat on WhatsApp Now</span>
             </button>
             <button

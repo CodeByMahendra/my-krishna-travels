@@ -1,5 +1,6 @@
 import React from "react";
-import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import ContactForm from "@/components/forms/ContactForm";
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
@@ -52,7 +53,7 @@ export default function ContactPage() {
             {/* WhatsApp */}
             <div className="bg-white p-5 sm:p-6 rounded-[14px] border border-brand-border shadow-card flex items-start gap-4">
               <div className="w-12 h-12 rounded-[8px] bg-emerald-50 text-brand-whatsapp border border-brand-whatsapp/20 flex items-center justify-center shrink-0">
-                <MessageCircle className="w-6 h-6 fill-current stroke-none" />
+                <WhatsAppIcon className="w-6 h-6 text-brand-whatsapp" />
               </div>
               <div className="space-y-1">
                 <h3 className="font-bold text-base text-navy">WhatsApp Instant Chat</h3>
