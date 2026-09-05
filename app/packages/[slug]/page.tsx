@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, X, Hotel, Car, Sparkles } from "lucide-react";
 import { tourPackagesData } from "@/data/packages";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import QuickLeadForm from "@/components/home/QuickLeadForm";
 import FinalCTA from "@/components/home/FinalCTA";
@@ -36,13 +35,6 @@ export default async function PackageDetailPage({ params }: Props) {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs
-          items={[
-            { label: "Tour Packages", href: "/packages" },
-            { label: pkg.name },
-          ]}
-        />
-
         {/* Hero Section of Package Detail */}
         <div className="bg-white rounded-[14px] overflow-hidden shadow-card border border-brand-border p-6 sm:p-10 mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -67,10 +59,8 @@ export default async function PackageDetailPage({ params }: Props) {
                 {pkg.description}
               </p>
 
-              <div className="pt-2 flex items-baseline gap-3">
-                <span className="text-xs text-brand-muted font-medium">Starting Price:</span>
-                <span className="text-2xl sm:text-3xl font-extrabold text-navy">{pkg.startingPrice}</span>
-                <span className="text-xs text-brand-muted font-normal">/ person (100% Customizable)</span>
+              <div className="pt-2 flex items-center gap-2 text-primary-blue font-bold text-xs sm:text-sm bg-light-blue px-3.5 py-1.5 rounded-lg border border-primary-blue/15 w-fit">
+                <span>✨ 100% Tailored & Customized Itinerary</span>
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row gap-3">

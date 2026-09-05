@@ -50,17 +50,17 @@ export default function WhyChooseUs() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
           {reasons.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white p-7 rounded-[14px] border border-brand-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 space-y-4 group"
+              className="bg-white p-3.5 sm:p-7 rounded-xl sm:rounded-[14px] border border-brand-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 space-y-2 sm:space-y-4 group"
             >
-              <div className="w-[48px] h-[48px] rounded-lg bg-light-blue border border-primary-blue/15 flex items-center justify-center p-2.5 transition-transform group-hover:scale-105">
-                {item.icon}
+              <div className="w-9 h-9 sm:w-[48px] sm:h-[48px] rounded-lg bg-light-blue border border-primary-blue/15 flex items-center justify-center p-1.5 sm:p-2.5 transition-transform group-hover:scale-105">
+                {React.cloneElement(item.icon, { className: "w-4 h-4 sm:w-6 sm:h-6 text-primary-blue" })}
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-navy">{item.title}</h3>
-              <p className="text-xs sm:text-sm text-brand-muted leading-relaxed font-normal">{item.description}</p>
+              <h3 className="text-xs sm:text-xl font-bold text-navy leading-snug">{item.title}</h3>
+              <p className="text-[11px] sm:text-sm text-brand-muted leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">{item.description}</p>
             </div>
           ))}
         </div>

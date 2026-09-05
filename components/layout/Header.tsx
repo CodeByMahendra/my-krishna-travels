@@ -31,15 +31,15 @@ export default function Header() {
   }, [pathname]);
 
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Packages", href: "/packages" },
-    { name: "Customize Trip", href: "/customize", badge: "AI PLAN" },
-    { name: "About Us", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Home", href: "/", icon: "🏠" },
+    { name: "Packages", href: "/packages", icon: "🛄" },
+    { name: "Spiritual Yatra", href: "/packages?theme=pilgrimage", icon: "🛕", badge: "Popular" },
+    { name: "About Us", href: "/about", icon: "ℹ️" },
+    { name: "Contact", href: "/contact", icon: "📞" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white transition-all duration-300">
+    <header className="sticky top-0 z-[60] w-full bg-white transition-all duration-300">
       {/* Top Bar - Quick Info */}
       <div className="bg-navy text-white text-[11px] sm:text-xs py-1.5 px-4 hidden md:block border-b border-white/10">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
@@ -77,7 +77,7 @@ export default function Header() {
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[64px] md:h-[76px]">
           {/* LEFT: Official Brand Logo */}
           <Link href="/" className="flex items-center shrink-0">
-            <div className="relative h-[52px] w-[190px] sm:h-[62px] sm:w-[230px] md:h-[72px] md:w-[270px] flex items-center">
+            <div className="relative h-[44px] w-[160px] sm:h-[58px] sm:w-[220px] md:h-[72px] md:w-[270px] flex items-center">
               <Image
                 src="/images/logo.png"
                 alt="My Krishna Travels.in"
@@ -137,12 +137,19 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-2 lg:hidden">
-            <WhatsAppButton variant="compact" text="" source="HeaderMobile" className="mr-1" />
+          {/* Mobile Right Actions */}
+          <div className="flex items-center gap-1.5 lg:hidden">
+            <a
+              href={`tel:${siteConfig.phoneNumber}`}
+              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-light-blue text-slate-700 hover:text-primary-blue flex items-center justify-center transition-colors"
+              aria-label="Call Us"
+            >
+              <Phone className="w-4 h-4" />
+            </a>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-slate-700 hover:text-primary-blue hover:bg-slate-100 focus:outline-none"
+              className="p-2 rounded-xl text-slate-700 hover:text-primary-blue hover:bg-slate-100 focus:outline-none transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6 text-brand-red" /> : <Menu className="w-6 h-6 text-navy" />}
@@ -174,7 +181,10 @@ export default function Header() {
                         : "text-slate-800 hover:bg-slate-50 hover:text-primary-blue"
                     }`}
                   >
-                    <span>{link.name}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">{link.icon}</span>
+                      <span>{link.name}</span>
+                    </div>
                     {link.badge && (
                       <span className="px-2 py-0.5 text-[10px] uppercase font-extrabold bg-brand-red text-white rounded-md shadow-xs">
                         {link.badge}

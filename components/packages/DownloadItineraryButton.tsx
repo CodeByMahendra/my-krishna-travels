@@ -88,8 +88,8 @@ export default function DownloadItineraryButton({
               <div class="overview-value">${pkg.destination}</div>
             </div>
             <div class="overview-item">
-              <div class="overview-label">Starting Price</div>
-              <div class="overview-value" style="color: #ef4444;">${pkg.startingPrice} / person</div>
+              <div class="overview-label">Tour Type</div>
+              <div class="overview-value" style="color: #0b7285;">Private Customized</div>
             </div>
             <div class="overview-item">
               <div class="overview-label">Customization</div>

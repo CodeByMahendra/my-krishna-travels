@@ -15,6 +15,7 @@ interface DestinationPricing {
 }
 
 const DESTINATIONS: DestinationPricing[] = [
+  { id: "mathura", name: "Mathura & Vrindavan Braj Darshan", basePrice: 4999, duration: "3 Days / 2 Nights", tag: "Spiritual Special" },
   { id: "ujjain", name: "Ujjain, Indore & Omkareshwar", basePrice: 6999, duration: "4 Days / 3 Nights", tag: "Most Popular" },
   { id: "kashmir", name: "Kashmir Paradise Escape", basePrice: 14999, duration: "6 Days / 5 Nights", tag: "Trending" },
   { id: "manali", name: "Manali & Himachal Adventure", basePrice: 8999, duration: "5 Days / 4 Nights", tag: "Best Value" },
@@ -121,7 +122,7 @@ export default function TripCostCalculator() {
                     >
                       <div className="line-clamp-1">{dest.name}</div>
                       <div className={`text-[10px] mt-1 font-semibold ${isSelected ? "text-rose-100" : "text-slate-500"}`}>
-                        Starts ₹{dest.basePrice.toLocaleString("en-IN")}
+                        {dest.duration}
                       </div>
                     </button>
                   );

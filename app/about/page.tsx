@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, HeartHandshake, UserCheck, Compass } from "lucide-react";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import FinalCTA from "@/components/home/FinalCTA";
 
@@ -15,8 +14,6 @@ export default function AboutPage() {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "About Us" }]} />
-
         {/* Hero Header */}
         <div className="bg-navy text-white rounded-[14px] p-8 sm:p-14 mb-16 relative overflow-hidden shadow-card">
           <div className="absolute inset-0 opacity-30">

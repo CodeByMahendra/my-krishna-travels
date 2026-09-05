@@ -19,7 +19,7 @@ export const siteConfig = {
 
   // Social Links
   socials: {
-    instagram: "https://instagram.com/mykrishnatravels.in",
+    instagram: "https://www.instagram.com/krishnatravels_25?igsi=MTN3ZWE0MTJ5dTZuaQ==",
     facebook: "https://facebook.com/mykrishnatravels.in",
     whatsapp: "https://wa.me/918964906436",
     youtube: "https://youtube.com/@mykrishnatravels",

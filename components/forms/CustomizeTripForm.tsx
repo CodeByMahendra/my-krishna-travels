@@ -7,7 +7,6 @@ import {
   MapPin,
   Calendar,
   Users,
-  Wallet,
   Heart,
   Send,
   CheckCircle2,
@@ -22,7 +21,7 @@ import {
   Sun
 } from "lucide-react";
 import WhatsAppIcon from "@/components/common/WhatsAppIcon";
-import DestinationAutocomplete from "@/components/common/DestinationAutocomplete";
+import DestinationAutocomplete, { SelectedLocationData } from "@/components/common/DestinationAutocomplete";
 import { getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
@@ -35,10 +34,10 @@ export default function CustomizeTripForm() {
 
   const [formData, setFormData] = useState({
     destination: initialDestination,
+    destinationLocation: null as SelectedLocationData | null,
     travelDates: "",
     duration: "5-7 Days",
     travellers: "2 Travellers (Couple / Honeymoon)",
-    budget: "Standard Comfort (₹20,000 - ₹40,000 / person)",
     tripType: "Family",
     name: "",
     phone: "",
@@ -49,11 +48,21 @@ export default function CustomizeTripForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const updateField = (field: string, value: string) => {
+  const updateField = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 6));
+  const handleDestinationSelect = (location: SelectedLocationData) => {
+    setFormData((prev) => ({
+      ...prev,
+      destination: location.formattedAddress
+        ? `${location.name}, ${location.formattedAddress}`
+        : location.name,
+      destinationLocation: location,
+    }));
+  };
+
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, 5));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,8 +73,17 @@ export default function CustomizeTripForm() {
     const payload = {
       ...formData,
       ...utm,
+      destinationCoordinates: formData.destinationLocation
+        ? `${formData.destinationLocation.latitude}, ${formData.destinationLocation.longitude}`
+        : undefined,
+      destinationAddress:
+        formData.destinationLocation?.formattedAddress || formData.destination,
       date: formData.travelDates,
-      message: `Duration: ${formData.duration} | Style: ${formData.tripType} | Notes: ${formData.notes || "None"}`,
+      message: `Duration: ${formData.duration} | Style: ${formData.tripType} | Notes: ${formData.notes || "None"}${
+        formData.destinationLocation
+          ? ` | Location: ${formData.destinationLocation.latitude}, ${formData.destinationLocation.longitude}`
+          : ""
+      }`,
       formSource: "Customized Trip Wizard",
     };
 
@@ -78,7 +96,6 @@ export default function CustomizeTripForm() {
       destination: formData.destination,
       date: formData.travelDates,
       travellers: formData.travellers,
-      budget: formData.budget,
       message: `Duration: ${formData.duration}, Style: ${formData.tripType}`,
     });
     trackWhatsAppClick("CustomizeWizardAutoRedirect");
@@ -105,20 +122,23 @@ export default function CustomizeTripForm() {
       destination: formData.destination,
       date: formData.travelDates,
       travellers: formData.travellers,
-      budget: formData.budget,
     });
     window.open(link, "_blank");
   };
 
   const popularDestinations = [
+    { name: "Mathura & Vrindavan", icon: "🛕", tag: "Braj Janmabhoomi & Bihari Ji" },
+    { name: "Ayodhya & Varanasi", icon: "🚩", tag: "Ram Mandir & Kashi Corridor" },
+    { name: "Ujjain & Omkareshwar", icon: "🕉️", tag: "Mahakal Lok & Jyotirlinga" },
     { name: "Kashmir", icon: "🏔️", tag: "Snow & Lakes" },
     { name: "Manali & Himachal", icon: "🌲", tag: "Mountains & Adventure" },
     { name: "Goa", icon: "🏖️", tag: "Beaches & Sunsets" },
+    { name: "Dwarka & Somnath", icon: "🔱", tag: "Shri Krishna & Jyotirlinga" },
+    { name: "Haridwar & Rishikesh", icon: "🌊", tag: "Ganga Aarti & Temples" },
     { name: "Kerala", icon: "🌴", tag: "Backwaters & Houseboat" },
     { name: "Dubai", icon: "🏙️", tag: "Luxury & Safari" },
     { name: "Bali", icon: "🌺", tag: "Tropical Island" },
     { name: "Rajasthan", icon: "🏰", tag: "Forts & Thar Desert" },
-    { name: "Maldives", icon: "🌊", tag: "Overwater Villas" },
   ];
 
   const durationOptions = [
@@ -136,31 +156,8 @@ export default function CustomizeTripForm() {
     { label: "10+ Travellers (Group)", subtitle: "Large Group / Corporate", icon: <Building2 className="w-5 h-5 text-primary-blue" /> },
   ];
 
-  const budgetOptions = [
-    {
-      title: "Budget Friendly",
-      range: "Under ₹20,000 / person",
-      tag: "Essential Comfort",
-      desc: "3★ Cozy Hotels + Private Cabs",
-      icon: <Wallet className="w-5 h-5 text-primary-blue" />,
-    },
-    {
-      title: "Standard Comfort",
-      range: "₹20,000 - ₹40,000 / person",
-      tag: "Most Popular",
-      desc: "3★ / 4★ View Resorts + Breakfast & Dinner",
-      icon: <Sparkles className="w-5 h-5 text-primary-blue" />,
-    },
-    {
-      title: "Premium Luxury",
-      range: "₹40,000+ / person",
-      tag: "Luxury Experience",
-      desc: "4★ / 5★ Luxury Resorts + Houseboats & Special Amenities",
-      icon: <Compass className="w-5 h-5 text-primary-blue" />,
-    },
-  ];
-
   const tripTypes = [
+    { label: "Spiritual / Darshan", icon: "🛕" },
     { label: "Family", icon: "👨‍👩‍👧‍👦" },
     { label: "Couple", icon: "💑" },
     { label: "Honeymoon", icon: "💍" },
@@ -174,7 +171,6 @@ export default function CustomizeTripForm() {
     "Destination",
     "Dates & Duration",
     "Travellers",
-    "Budget",
     "Trip Style",
     "Contact Details",
   ];
@@ -203,7 +199,7 @@ export default function CustomizeTripForm() {
             <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-100 -translate-y-1/2 -z-0 rounded-full" />
             <div
               className="absolute top-1/2 left-0 h-1 bg-primary-blue -translate-y-1/2 transition-all duration-300 rounded-full -z-0"
-              style={{ width: `${((step - 1) / 5) * 100}%` }}
+              style={{ width: `${((step - 1) / 4) * 100}%` }}
             />
 
             {stepTitles.map((title, idx) => {
@@ -250,14 +246,14 @@ export default function CustomizeTripForm() {
                 <span className="w-5 h-5 rounded-full bg-primary-blue text-white flex items-center justify-center text-[10px]">
                   {step}
                 </span>
-                Step {step} of 6
+                Step {step} of 5
               </span>
               <span className="text-navy font-bold tracking-wide">{stepTitles[step - 1]}</span>
             </div>
             <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-primary-blue transition-all duration-300 rounded-full"
-                style={{ width: `${(step / 6) * 100}%` }}
+                style={{ width: `${(step / 5) * 100}%` }}
               />
             </div>
           </div>
@@ -348,22 +344,26 @@ export default function CustomizeTripForm() {
                 </div>
               </div>
 
-              {/* Destination Search Box with Live Auto-Fetch */}
+              {/* Destination Search Box */}
               <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Search City, State, or Country *
-                  </label>
-                  <span className="text-[11px] font-bold text-primary-blue bg-light-blue px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <span>⚡</span>
-                    <span>Live Auto-Fetch</span>
-                  </span>
-                </div>
+                <label className="block text-xs font-semibold text-brand-dark mb-1.5">
+                  Type Destination Name *
+                </label>
                 <DestinationAutocomplete
                   value={formData.destination}
-                  onChange={(val) => updateField("destination", val)}
-                  onSelect={(val) => updateField("destination", val)}
-                  placeholder="Type any City, State, or Country (e.g. Gujarat, Manali, Dubai, Paris...)"
+                  onChange={(val) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      destination: val,
+                      destinationLocation:
+                        prev.destinationLocation?.name === val
+                          ? prev.destinationLocation
+                          : null,
+                    }));
+                  }}
+                  onSelectLocation={handleDestinationSelect}
+                  placeholder="e.g. Mahakaleshwar, Ujjain, Kashmir, Goa, Dubai..."
+                  required
                 />
               </div>
 
@@ -374,12 +374,20 @@ export default function CustomizeTripForm() {
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                   {popularDestinations.map((dest) => {
-                    const isSelected = formData.destination === dest.name;
+                    const isSelected =
+                      formData.destination === dest.name ||
+                      formData.destination.startsWith(`${dest.name},`);
                     return (
                       <button
                         key={dest.name}
                         type="button"
-                        onClick={() => updateField("destination", dest.name)}
+                        onClick={() => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            destination: dest.name,
+                            destinationLocation: null,
+                          }));
+                        }}
                         className={`p-3 rounded-[8px] border text-left transition-all duration-150 flex flex-col justify-between h-22 ${
                           isSelected
                             ? "border-primary-blue bg-light-blue text-primary-blue ring-2 ring-primary-blue/20 shadow-xs"
@@ -577,78 +585,6 @@ export default function CustomizeTripForm() {
                   onClick={nextStep}
                   className="bg-primary-blue hover:bg-primary-hover text-white font-semibold h-[46px] px-7 rounded-[8px] shadow-xs transition-colors flex items-center gap-2 text-sm"
                 >
-                  <span>Continue to Budget</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* STEP 4: Budget Tier */}
-          {step === 4 && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 border-b border-brand-border/60 pb-3">
-                <div className="p-2 rounded-lg bg-light-blue text-primary-blue">
-                  <Wallet className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-navy">
-                    STEP 4: What&apos;s your budget preference?
-                  </h3>
-                  <p className="text-xs text-brand-muted font-normal">Per person estimated budget expectation</p>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                {budgetOptions.map((opt) => {
-                  const isSelected = formData.budget.includes(opt.title);
-                  return (
-                    <button
-                      key={opt.title}
-                      type="button"
-                      onClick={() => updateField("budget", `${opt.title} (${opt.range})`)}
-                      className={`w-full p-4 rounded-[8px] border text-left flex items-center justify-between transition-all ${
-                        isSelected
-                          ? "border-primary-blue bg-light-blue text-primary-blue ring-2 ring-primary-blue/20 shadow-xs"
-                          : "border-brand-border hover:bg-slate-50 text-brand-dark"
-                      }`}
-                    >
-                      <div className="flex items-start gap-3.5">
-                        <div className="p-2 rounded-md bg-white border border-brand-border mt-0.5">
-                          {opt.icon}
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="font-bold text-sm">{opt.title}</p>
-                            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-primary-blue/10 text-primary-blue">
-                              {opt.tag}
-                            </span>
-                          </div>
-                          <p className="text-xs font-semibold text-navy mt-0.5">{opt.range}</p>
-                          <p className="text-xs text-brand-muted mt-0.5 font-normal">{opt.desc}</p>
-                        </div>
-                      </div>
-                      {isSelected && <Check className="w-5 h-5 text-primary-blue shrink-0" />}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Navigation */}
-              <div className="pt-4 flex justify-between gap-3">
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  className="bg-white border border-primary-blue text-navy hover:bg-light-blue font-semibold h-[46px] px-6 rounded-[8px] flex items-center gap-2 text-sm"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Back</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  className="bg-primary-blue hover:bg-primary-hover text-white font-semibold h-[46px] px-7 rounded-[8px] shadow-xs transition-colors flex items-center gap-2 text-sm"
-                >
                   <span>Continue to Trip Style</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
@@ -656,8 +592,8 @@ export default function CustomizeTripForm() {
             </div>
           )}
 
-          {/* STEP 5: Trip Style / Type */}
-          {step === 5 && (
+          {/* STEP 4: Trip Style / Type */}
+          {step === 4 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 border-b border-brand-border/60 pb-3">
                 <div className="p-2 rounded-lg bg-light-blue text-primary-blue">
@@ -665,7 +601,7 @@ export default function CustomizeTripForm() {
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-navy">
-                    STEP 5: What type of trip is this?
+                    STEP 4: What type of trip is this?
                   </h3>
                   <p className="text-xs text-brand-muted font-normal">Helps us suggest specific hotels & itinerary pace</p>
                 </div>
@@ -714,8 +650,8 @@ export default function CustomizeTripForm() {
             </div>
           )}
 
-          {/* STEP 6: Contact Details & Submit */}
-          {step === 6 && (
+          {/* STEP 5: Contact Details & Submit */}
+          {step === 5 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 border-b border-brand-border/60 pb-3">
                 <div className="p-2 rounded-lg bg-light-blue text-primary-blue">
@@ -723,7 +659,7 @@ export default function CustomizeTripForm() {
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-navy">
-                    STEP 6: Where should we send your travel plan?
+                    STEP 5: Where should we send your travel plan?
                   </h3>
                   <p className="text-xs text-brand-muted font-normal">Provide your contact details for instant itinerary delivery</p>
                 </div>

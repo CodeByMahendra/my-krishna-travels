@@ -1,173 +1,203 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { MapPin, Search, X, Loader2, Globe, Building2, Landmark, Check } from "lucide-react";
-import { searchLocalDestinations, DestinationItem } from "@/data/destinationsSearchData";
+import { MapPin, Loader2, X, Navigation } from "lucide-react";
+import { DestinationSuggestion } from "@/app/api/destinations-search/route";
 
-export interface DestinationAutocompleteProps {
-  value: string;
-  onChange: (value: string) => void;
-  onSelect?: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  autoFocus?: boolean;
+export interface SelectedLocationData {
+  name: string;
+  formattedAddress: string;
+  latitude: number;
+  longitude: number;
+  city?: string;
+  state?: string;
+  country?: string;
 }
 
-interface SuggestionItem {
-  id: string;
-  name: string;
-  displayName: string;
-  category: "City" | "State" | "Country" | "Region" | "Place";
-  country: string;
-  state?: string;
-  tag?: string;
+interface DestinationAutocompleteProps {
+  value: string;
+  onChange: (value: string) => void;
+  onSelectLocation?: (location: SelectedLocationData) => void;
+  placeholder?: string;
+  required?: boolean;
+  className?: string;
 }
 
 export default function DestinationAutocomplete({
   value,
   onChange,
-  onSelect,
-  placeholder = "Search City, State, or Country (e.g. Gujarat, Manali, Dubai...)",
+  onSelectLocation,
+  placeholder = "e.g. Kashmir, Manali, Goa, Dubai, Bali...",
+  required = false,
   className = "",
-  autoFocus = false,
 }: DestinationAutocompleteProps) {
+  const [suggestions, setSuggestions] = useState<DestinationSuggestion[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [suggestions, setSuggestions] = useState<SuggestionItem[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [hasSearched, setHasSearched] = useState(false);
 
-  // Close dropdown on outside click
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const justSelectedRef = useRef(false);
+
+  // Close dropdown on outside click or on window scroll
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
-    }
+    };
+
+    const handleWindowScroll = () => {
+      setIsOpen(false);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    window.addEventListener("scroll", handleWindowScroll, { passive: true });
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleWindowScroll);
+    };
   }, []);
 
-  // Handle Search Query changes with 0ms local + debounced live fetch
+  // Debounced search with AbortController for race condition prevention
   useEffect(() => {
-    const query = value.trim();
-    if (!query || query.length < 2) {
-      setSuggestions([]);
-      setIsOpen(false);
+    if (justSelectedRef.current) {
+      justSelectedRef.current = false;
       return;
     }
 
-    // 1. Instant 0ms local results
-    const local = searchLocalDestinations(query);
-    const initialSuggestions: SuggestionItem[] = local.map((item) => ({
-      id: item.id,
-      name: item.name,
-      displayName: item.state
-        ? `${item.name}, ${item.state}, ${item.country}`
-        : item.category === "Country"
-        ? item.name
-        : `${item.name}, ${item.country}`,
-      category: item.category,
-      country: item.country,
-      state: item.state,
-      tag: item.tag,
-    }));
+    const trimmed = value.trim();
 
-    setSuggestions(initialSuggestions);
-    setIsOpen(true);
-    setSelectedIndex(-1);
+    if (trimmed.length < 2) {
+      setSuggestions([]);
+      setIsOpen(false);
+      setLoading(false);
+      setHasSearched(false);
+      return;
+    }
 
-    // 2. Debounced live fetch from API
     setLoading(true);
+    setHasSearched(false);
+
     const timer = setTimeout(async () => {
+      // Abort previous in-flight request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+
       try {
-        const res = await fetch(`/api/destinations-search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(
+          `/api/destinations-search?q=${encodeURIComponent(trimmed)}`,
+          { signal: controller.signal }
+        );
+
         if (res.ok) {
           const data = await res.json();
-          if (data.results && Array.isArray(data.results) && data.results.length > 0) {
-            setSuggestions(data.results);
-          }
+          const items: DestinationSuggestion[] = data?.results || [];
+          setSuggestions(items);
+          setIsOpen(true);
+          setHighlightedIndex(items.length > 0 ? 0 : -1);
+          setHasSearched(true);
+        } else {
+          setSuggestions([]);
+          setHasSearched(true);
         }
-      } catch (err) {
-        console.warn("Live destination search error:", err);
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
+          console.warn("Destination search error:", err);
+          setSuggestions([]);
+          setHasSearched(true);
+        }
       } finally {
         setLoading(false);
       }
-    }, 250);
+    }, 350); // 350ms debounce
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [value]);
 
-  const handleSelect = (destinationName: string) => {
-    onChange(destinationName);
-    if (onSelect) onSelect(destinationName);
+  const handleSelect = (item: DestinationSuggestion) => {
+    justSelectedRef.current = true;
+    const selectedName = item.formattedAddress
+      ? `${item.name}, ${item.formattedAddress}`
+      : item.name;
+
+    onChange(selectedName);
     setIsOpen(false);
+    setSuggestions([]);
+
+    if (onSelectLocation) {
+      onSelectLocation({
+        name: item.name,
+        formattedAddress: item.formattedAddress,
+        latitude: item.latitude,
+        longitude: item.longitude,
+        city: item.city,
+        state: item.state,
+        country: item.country,
+      });
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!isOpen || suggestions.length === 0) {
-      if (e.key === "Enter") {
+      if (e.key === "ArrowDown" && suggestions.length > 0) {
+        setIsOpen(true);
+        setHighlightedIndex(0);
         e.preventDefault();
-        setIsOpen(false);
       }
       return;
     }
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
+      setHighlightedIndex((prev) =>
+        prev < suggestions.length - 1 ? prev + 1 : 0
+      );
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
+      setHighlightedIndex((prev) =>
+        prev > 0 ? prev - 1 : suggestions.length - 1
+      );
     } else if (e.key === "Enter") {
       e.preventDefault();
-      if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
-        handleSelect(suggestions[selectedIndex].name);
+      if (highlightedIndex >= 0 && highlightedIndex < suggestions.length) {
+        handleSelect(suggestions[highlightedIndex]);
       } else if (suggestions.length > 0) {
-        handleSelect(suggestions[0].name);
+        handleSelect(suggestions[0]);
       }
     } else if (e.key === "Escape") {
       setIsOpen(false);
     }
   };
 
-  const getCategoryBadge = (category: SuggestionItem["category"]) => {
-    switch (category) {
-      case "Country":
-        return {
-          label: "Country",
-          bg: "bg-amber-100 text-amber-800 border-amber-200",
-          icon: <Globe className="w-3 h-3 text-amber-600" />,
-        };
-      case "State":
-        return {
-          label: "State",
-          bg: "bg-emerald-100 text-emerald-800 border-emerald-200",
-          icon: <Landmark className="w-3 h-3 text-emerald-600" />,
-        };
-      case "City":
-        return {
-          label: "City",
-          bg: "bg-blue-100 text-blue-800 border-blue-200",
-          icon: <Building2 className="w-3 h-3 text-blue-600" />,
-        };
-      default:
-        return {
-          label: "Destination",
-          bg: "bg-slate-100 text-slate-800 border-slate-200",
-          icon: <MapPin className="w-3 h-3 text-slate-600" />,
-        };
-    }
+  const handleClear = () => {
+    onChange("");
+    setSuggestions([]);
+    setIsOpen(false);
+    inputRef.current?.focus();
   };
 
   return (
-    <div ref={wrapperRef} className={`relative w-full ${className}`}>
-      {/* Search Input Box */}
+    <div ref={containerRef} className={`relative w-full ${className}`}>
+      {/* Input container */}
       <div className="relative flex items-center">
         <input
           ref={inputRef}
           type="text"
+          required={required}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => {
@@ -176,36 +206,28 @@ export default function DestinationAutocomplete({
             }
           }}
           onKeyDown={handleKeyDown}
-          autoFocus={autoFocus}
           placeholder={placeholder}
-          aria-autocomplete="list"
-          aria-expanded={isOpen}
-          className="w-full h-[50px] pl-11 pr-24 rounded-xl border-2 border-slate-200 focus:border-primary-blue focus:ring-4 focus:ring-primary-blue/15 text-sm sm:text-base font-semibold text-slate-800 placeholder:text-slate-400 bg-white transition-all shadow-xs"
+          autoComplete="off"
+          className="w-full h-[48px] pl-11 pr-16 rounded-[8px] border border-brand-border focus:outline-none focus:ring-2 focus:ring-primary-blue text-sm font-semibold text-brand-dark bg-white transition-colors"
         />
 
-        {/* Left Location Icon */}
-        <MapPin className="w-5 h-5 text-primary-blue absolute left-3.5 pointer-events-none" />
+        {/* Left Map Pin */}
+        <MapPin className="w-5 h-5 text-slate-400 absolute left-3.5 pointer-events-none" />
 
-        {/* Right Status / Action Controls */}
+        {/* Right Status / Clear Controls */}
         <div className="absolute right-3 flex items-center gap-1.5">
           {loading && (
-            <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md text-[11px] font-bold text-slate-500 animate-in fade-in">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-primary-blue" />
-              <span className="hidden sm:inline">Fetching...</span>
+            <div className="flex items-center text-primary-blue">
+              <Loader2 className="w-4 h-4 animate-spin text-primary-blue" />
             </div>
           )}
 
-          {value && (
+          {value && !loading && (
             <button
               type="button"
-              onClick={() => {
-                onChange("");
-                setSuggestions([]);
-                setIsOpen(false);
-                inputRef.current?.focus();
-              }}
-              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition-colors"
-              aria-label="Clear destination"
+              onClick={handleClear}
+              className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              aria-label="Clear destination input"
             >
               <X className="w-4 h-4" />
             </button>
@@ -213,91 +235,74 @@ export default function DestinationAutocomplete({
         </div>
       </div>
 
-      {/* Live Dropdown Suggestions */}
+      {/* Uber/Rapido-Style Dropdown Suggestions */}
       {isOpen && (
-        <div className="absolute top-[calc(100%+6px)] inset-x-0 z-50 bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
-          {/* Header indicator */}
-          <div className="px-4 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-500">
-            <span className="flex items-center gap-1.5">
-              <Search className="w-3.5 h-3.5 text-primary-blue" />
-              <span>Matching Destinations ({suggestions.length})</span>
-            </span>
-            <span className="text-[10px] text-slate-400">Click or Press Enter</span>
-          </div>
-
-          <div className="max-h-[320px] overflow-y-auto divide-y divide-slate-100 py-1">
-            {suggestions.length > 0 ? (
-              suggestions.map((item, index) => {
-                const isSelected = selectedIndex === index;
-                const badge = getCategoryBadge(item.category);
-                const isCurrent = value.toLowerCase() === item.name.toLowerCase();
-
+        <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-30 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+          {suggestions.length > 0 ? (
+            <ul className="max-h-[320px] overflow-y-auto divide-y divide-slate-100 py-1 focus:outline-none">
+              {suggestions.map((item, index) => {
+                const isSelected = highlightedIndex === index;
                 return (
-                  <button
+                  <li
                     key={item.id}
-                    type="button"
-                    onClick={() => handleSelect(item.name)}
-                    onMouseEnter={() => setSelectedIndex(index)}
-                    className={`w-full text-left px-4 py-3 flex items-center justify-between gap-3 transition-colors ${
+                    onMouseEnter={() => setHighlightedIndex(index)}
+                    onClick={() => handleSelect(item)}
+                    className={`px-3.5 py-2.5 flex items-center gap-3 cursor-pointer transition-colors ${
                       isSelected
-                        ? "bg-light-blue text-primary-blue"
-                        : "hover:bg-slate-50 text-slate-800"
+                        ? "bg-light-blue/60 text-primary-blue"
+                        : "hover:bg-slate-50 text-brand-dark"
                     }`}
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div
-                        className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                          isSelected ? "bg-primary-blue text-white" : "bg-slate-100 text-slate-600"
-                        }`}
-                      >
-                        <MapPin className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-sm truncate">{item.name}</span>
-                          <span
-                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border ${badge.bg}`}
-                          >
-                            {badge.icon}
-                            <span>{badge.label}</span>
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-500 font-normal truncate mt-0.5">
-                          {item.displayName || item.tag}
-                        </p>
-                      </div>
+                    {/* Uber/Rapido Style Pin Icon */}
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                        isSelected
+                          ? "bg-primary-blue text-white"
+                          : "bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      <MapPin className="w-4 h-4" />
                     </div>
 
-                    {isCurrent ? (
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    ) : (
-                      <span className="text-xs font-semibold text-slate-400 group-hover:text-primary-blue shrink-0">
-                        Select →
-                      </span>
-                    )}
-                  </button>
-                );
-              })
-            ) : (
-              <div className="p-4 text-center text-sm text-slate-500 space-y-2">
-                <p>No exact match found for &quot;{value}&quot;.</p>
-                <button
-                  type="button"
-                  onClick={() => handleSelect(value.trim())}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-blue text-white text-xs font-bold rounded-lg hover:bg-primary-hover transition-colors"
-                >
-                  <Check className="w-3.5 h-3.5" />
-                  <span>Use &quot;{value.trim()}&quot; as destination</span>
-                </button>
-              </div>
-            )}
-          </div>
+                    {/* Location Text (Place Name + Subtitle/Address) */}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-bold text-sm text-slate-900 truncate">
+                          {item.name}
+                        </p>
+                        {item.country && (
+                          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider shrink-0">
+                            {item.country}
+                          </span>
+                        )}
+                      </div>
+                      {item.formattedAddress && (
+                        <p className="text-xs text-slate-500 truncate mt-0.5 font-normal">
+                          {item.formattedAddress}
+                        </p>
+                      )}
+                    </div>
 
-          {/* Quick Helper Footer */}
-          <div className="px-4 py-2 bg-slate-50 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>⚡ Instant City, State & Country Search</span>
-            <span className="font-semibold text-emerald-600">✓ Auto-Fetched</span>
-          </div>
+                    <Navigation
+                      className={`w-3.5 h-3.5 shrink-0 transition-opacity ${
+                        isSelected ? "opacity-100 text-primary-blue" : "opacity-0"
+                      }`}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            hasSearched &&
+            !loading && (
+              <div className="p-4 text-center text-sm text-slate-500 space-y-1">
+                <p className="font-medium">No locations found</p>
+                <p className="text-xs text-slate-400">
+                  Try typing a city, region, or landmark name
+                </p>
+              </div>
+            )
+          )}
         </div>
       )}
     </div>

@@ -63,6 +63,7 @@
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #F1F5F9;
@@ -73,6 +74,17 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #0B63CE;
+}
+
+/* Hide Scrollbar Utilities */
+.scrollbar-none, .no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-none::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
 }
 
 /* Standardized Button Helper Classes */

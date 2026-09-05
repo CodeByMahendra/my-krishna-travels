@@ -2,7 +2,6 @@ import React from "react";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import ContactForm from "@/components/forms/ContactForm";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import FinalCTA from "@/components/home/FinalCTA";
 import { siteConfig } from "@/lib/config";
@@ -16,8 +15,6 @@ export default function ContactPage() {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Contact Us" }]} />
-
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <span className="bg-light-blue text-primary-blue px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-primary-blue/15">
             We&apos;re Here to Help

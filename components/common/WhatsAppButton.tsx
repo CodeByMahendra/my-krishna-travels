@@ -34,7 +34,7 @@ export default function WhatsAppButton({
         rel="noopener noreferrer"
         onClick={handleClick}
         aria-label="Chat with us on WhatsApp"
-        className={`fixed bottom-20 right-5 md:bottom-6 md:right-6 z-50 flex items-center gap-2.5 bg-brand-whatsapp hover:bg-brand-whatsappHover text-white p-3.5 md:px-5 md:py-3 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] hover:shadow-[0_6px_25px_rgba(37,211,102,0.55)] transition-all duration-200 hover:scale-105 group ${className}`}
+        className={`hidden md:flex fixed bottom-6 right-6 z-50 items-center gap-2.5 bg-brand-whatsapp hover:bg-brand-whatsappHover text-white px-5 py-3 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] hover:shadow-[0_6px_25px_rgba(37,211,102,0.55)] transition-all duration-200 hover:scale-105 group ${className}`}
       >
         <WhatsAppIcon className="w-6 h-6 text-white" />
         <span className="hidden md:inline font-bold text-sm tracking-wide">

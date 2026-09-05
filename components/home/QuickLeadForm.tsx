@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Sparkles, Send, CheckCircle2, MapPin } from "lucide-react";
 import WhatsAppIcon from "@/components/common/WhatsAppIcon";
-import DestinationAutocomplete from "@/components/common/DestinationAutocomplete";
 import { getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
@@ -62,56 +61,57 @@ export default function QuickLeadForm() {
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-7 border border-slate-100/90 relative text-slate-800">
-      <div className="flex items-center gap-2 mb-1.5">
-        <span className="text-brand-red bg-brand-red-light p-1 rounded-md">
-          <Sparkles className="w-4 h-4" />
+    <div className="bg-white rounded-xl sm:rounded-3xl shadow-xl p-2.5 sm:p-5 md:p-6 border border-slate-100 relative text-slate-800 overflow-hidden">
+      <div className="flex items-center gap-1 mb-0.5 sm:mb-1">
+        <span className="text-brand-red bg-brand-red-light p-0.5 rounded">
+          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
         </span>
-        <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-brand-red">
+        <span className="text-[9px] sm:text-xs font-black uppercase tracking-wider text-brand-red">
           Instant Trip Assistance
         </span>
       </div>
 
-      <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-1 tracking-tight">
+      <h2 className="text-base sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">
         Plan Your Dream Trip
       </h2>
-      <p className="text-xs sm:text-sm text-slate-500 mb-5 leading-relaxed font-normal">
-        Share your choices to get a customized itinerary quote in 15 minutes.
+      <p className="text-[10px] sm:text-xs text-slate-500 mb-1.5 sm:mb-3 font-normal leading-tight">
+        Share your choices to get a customized quote in 15 minutes.
       </p>
 
       {submitted ? (
-        <div className="text-center py-8 space-y-4">
-          <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
-            <CheckCircle2 className="w-10 h-10" />
+        <div className="text-center py-4 sm:py-6 space-y-2 sm:space-y-3">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+            <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8" />
           </div>
-          <div className="space-y-1">
-            <h3 className="text-xl font-black text-slate-900">Enquiry Submitted!</h3>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto font-normal">
-              Thank you <strong className="text-brand-red">{formData.name}</strong>! Our travel expert will contact you shortly with a personalized proposal.
+          <div className="space-y-0.5 sm:space-y-1">
+            <h3 className="text-base sm:text-lg font-black text-slate-900">Enquiry Submitted!</h3>
+            <p className="text-[11px] sm:text-xs text-slate-600 max-w-sm mx-auto font-normal">
+              Thank you <strong className="text-brand-red">{formData.name}</strong>! Our travel expert will contact you shortly.
             </p>
           </div>
 
-          <div className="pt-2 flex flex-col gap-2.5">
+          <div className="pt-1.5 flex flex-col gap-1.5">
             <button
               onClick={handleWhatsAppDirect}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-[48px] rounded-xl flex items-center justify-center gap-2 transition-all shadow-md text-sm"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-[36px] sm:h-[40px] rounded-lg sm:rounded-xl flex items-center justify-center gap-2 transition-all shadow-md text-xs sm:text-sm"
             >
-              <WhatsAppIcon className="w-4 h-4 text-white" />
-              <span>Connect Immediately on WhatsApp</span>
+              <WhatsAppIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+              <span>Connect on WhatsApp</span>
             </button>
             <button
               onClick={() => setSubmitted(false)}
-              className="text-xs text-brand-red hover:underline font-bold"
+              className="text-[11px] sm:text-xs text-brand-red hover:underline font-bold"
             >
               Submit Another Enquiry
             </button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <form onSubmit={handleSubmit} className="space-y-1.5 sm:space-y-2.5">
+          {/* Row 1: Name & WhatsApp (2-col even on mobile) */}
+          <div className="grid grid-cols-2 gap-1.5 sm:gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
                 Full Name *
               </label>
               <input
@@ -121,12 +121,12 @@ export default function QuickLeadForm() {
                 placeholder="e.g. Rahul Sharma"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full h-[46px] px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-sm font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
+                className="w-full h-[32px] sm:h-[40px] px-2 sm:px-3 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[11px] sm:text-xs font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                WhatsApp Number *
+              <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
+                WhatsApp No. *
               </label>
               <input
                 type="tel"
@@ -135,83 +135,93 @@ export default function QuickLeadForm() {
                 placeholder="e.g. 9876543210"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full h-[46px] px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-sm font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
+                className="w-full h-[32px] sm:h-[40px] px-2 sm:px-3 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[11px] sm:text-xs font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Where to? (Destination) *
-              </label>
-              <DestinationAutocomplete
+          {/* Row 2: Destination */}
+          <div>
+            <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
+              Where to? (Destination) *
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                name="destination"
+                required
+                placeholder="e.g. Mathura, Vrindavan, Kashmir, Goa..."
                 value={formData.destination}
-                onChange={(val) => setFormData((prev) => ({ ...prev, destination: val }))}
-                placeholder="City, State, Country..."
-                className="w-full text-xs"
+                onChange={handleChange}
+                className="w-full h-[32px] sm:h-[40px] pl-7 pr-2 sm:pl-9 sm:pr-3 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[11px] sm:text-xs font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
               />
+              <MapPin className="w-3 h-3 text-slate-400 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
+          </div>
+
+          {/* Row 3: Travel Date & Travellers (2-col) */}
+          <div className="grid grid-cols-2 gap-1.5 sm:gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Approximate Travel Date
+              <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
+                Travel Date
               </label>
               <input
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="w-full h-[46px] px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-sm font-semibold text-slate-800 bg-white"
+                className="w-full h-[32px] sm:h-[40px] px-1.5 sm:px-2.5 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[10px] sm:text-xs font-semibold text-slate-800 bg-white"
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Number of Travellers
+              <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
+                Travellers
               </label>
               <select
                 name="travellers"
                 value={formData.travellers}
                 onChange={handleChange}
-                className="w-full h-[46px] px-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-sm bg-white font-semibold text-slate-800"
+                className="w-full h-[32px] sm:h-[40px] px-1.5 sm:px-2.5 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[10px] sm:text-xs bg-white font-semibold text-slate-800 cursor-pointer"
               >
-                <option value="1 Traveller (Solo)">1 Traveller (Solo)</option>
-                <option value="2 Travellers (Couple)">2 Travellers (Couple)</option>
-                <option value="3-5 Travellers (Family)">3-5 Travellers (Family)</option>
-                <option value="6+ Travellers (Group)">6+ Travellers (Group)</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Approximate Budget
-              </label>
-              <select
-                name="budget"
-                value={formData.budget}
-                onChange={handleChange}
-                className="w-full h-[46px] px-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-sm bg-white font-semibold text-slate-800"
-              >
-                <option value="Budget Friendly">Budget Friendly (&lt;₹20k)</option>
-                <option value="Standard Comfort">Standard Comfort (₹20k-₹40k)</option>
-                <option value="Premium Luxury">Premium Luxury (₹40k+)</option>
+                <option value="1 Traveller (Solo)">1 Solo</option>
+                <option value="2 Travellers (Couple)">2 Couple</option>
+                <option value="3-5 Travellers (Family)">3-5 Family</option>
+                <option value="6+ Travellers (Group)">6+ Group</option>
               </select>
             </div>
           </div>
 
-          <div className="pt-2 flex flex-col gap-2.5">
+          {/* Row 4: Hotel & Stay Style */}
+          <div>
+            <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
+              Stay Preference
+            </label>
+            <select
+              name="budget"
+              value={formData.budget}
+              onChange={handleChange}
+              className="w-full h-[32px] sm:h-[40px] px-2 sm:px-3 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[11px] sm:text-xs bg-white font-semibold text-slate-800 cursor-pointer"
+            >
+              <option value="Standard (3-Star)">Standard (3-Star Deluxe)</option>
+              <option value="Premium (4-Star)">Premium (4-Star Luxury)</option>
+              <option value="Ultra Luxury (5-Star)">Ultra Luxury (5-Star & Resorts)</option>
+              <option value="Budget Friendly">Budget Friendly Stays</option>
+            </select>
+          </div>
+
+          {/* Row 5: Action Buttons Side-by-Side */}
+          <div className="pt-0.5 sm:pt-1 grid grid-cols-2 gap-1.5 sm:gap-2">
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-brand-red hover:bg-brand-red-dark text-white font-extrabold h-[48px] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm sm:text-base active:scale-[0.98]"
+              className="w-full bg-brand-red hover:bg-brand-red-dark text-white font-extrabold h-[34px] sm:h-[42px] rounded-lg sm:rounded-xl shadow-md transition-all flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-sm active:scale-[0.98] whitespace-nowrap"
             >
               {loading ? (
-                <span>Processing...</span>
+                <span>Sending...</span>
               ) : (
                 <>
-                  <Send className="w-4 h-4" />
-                  <span>Get Free Quote</span>
+                  <Send className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                  <span>Get Quote</span>
                 </>
               )}
             </button>
@@ -219,10 +229,10 @@ export default function QuickLeadForm() {
             <button
               type="button"
               onClick={handleWhatsAppDirect}
-              className="w-full bg-white hover:bg-slate-50 border border-slate-200 text-emerald-600 font-bold h-[44px] rounded-xl flex items-center justify-center gap-2 transition-all text-xs sm:text-sm active:scale-[0.98]"
+              className="w-full bg-white hover:bg-emerald-50/40 border border-slate-200 text-emerald-600 font-bold h-[34px] sm:h-[42px] rounded-lg sm:rounded-xl flex items-center justify-center gap-1 sm:gap-1.5 transition-all text-[11px] sm:text-sm active:scale-[0.98] whitespace-nowrap"
             >
-              <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
-              <span>Chat on WhatsApp</span>
+              <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>WhatsApp</span>
             </button>
           </div>
         </form>

@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import MobileStickyBar from "@/components/layout/MobileStickyBar";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import MetaAnalytics from "@/components/common/MetaAnalytics";
-import SocialProofTicker from "@/components/common/SocialProofTicker";
 import { siteConfig } from "@/lib/config";
 
 const manrope = Manrope({
@@ -71,14 +70,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`scroll-smooth ${manrope.variable} ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col antialiased bg-light-bg text-brand-dark selection:bg-primary-blue selection:text-white pb-16 md:pb-0">
+      <body className="min-h-screen flex flex-col antialiased bg-light-bg text-brand-dark selection:bg-primary-blue selection:text-white pb-20 md:pb-0">
         <MetaAnalytics />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
         <MobileStickyBar />
         <WhatsAppButton variant="floating" source="FloatingButton" />
-        <SocialProofTicker />
       </body>
     </html>
   );
