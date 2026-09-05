@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { destinationsData } from "@/data/destinations";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import FinalCTA from "@/components/home/FinalCTA";
 
 export const metadata = {
@@ -15,8 +14,6 @@ export default function DestinationsPage() {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Destinations" }]} />
-
         {/* Page Banner */}
         <div className="bg-navy text-white rounded-[14px] p-8 sm:p-12 mb-12 relative overflow-hidden shadow-card">
           <div className="absolute inset-0 opacity-30">
@@ -40,48 +37,63 @@ export default function DestinationsPage() {
           </div>
         </div>
 
-        {/* Destinations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
+        {/* Destinations Grid - Horizontal on mobile, 3-col on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 mb-16">
           {destinationsData.map((dest) => (
             <div
               key={dest.id}
-              className="bg-white rounded-[14px] overflow-hidden border border-brand-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group"
+              className="bg-white rounded-xl sm:rounded-[14px] overflow-hidden border border-brand-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 flex flex-row sm:flex-col justify-between group"
             >
-              <div>
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                  <Image
-                    src={dest.image}
-                    alt={dest.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent" />
+              {/* Image thumbnail on mobile (125px), full width on desktop */}
+              <div className="relative w-[125px] min-h-[140px] sm:w-full sm:min-h-0 sm:aspect-[4/3] shrink-0 bg-slate-100 overflow-hidden">
+                <Image
+                  src={dest.image}
+                  alt={dest.name}
+                  fill
+                  sizes="(max-width: 768px) 130px, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent sm:block hidden" />
 
-                  <span className="absolute top-4 left-4 bg-primary-blue text-white text-xs font-semibold px-3 py-1 rounded-full shadow-xs">
-                    {dest.category}
-                  </span>
+                <span className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-primary-blue text-white text-[9px] sm:text-xs font-semibold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-xs">
+                  {dest.category}
+                </span>
 
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="text-[20px] sm:text-[22px] font-extrabold text-white">{dest.name}</h3>
-                    <p className="text-xs text-slate-200 font-medium">{dest.subtitle}</p>
-                  </div>
+                <div className="absolute bottom-4 left-4 right-4 text-white hidden sm:block">
+                  <h3 className="text-[20px] sm:text-[22px] font-extrabold text-white">{dest.name}</h3>
+                  <p className="text-xs text-slate-200 font-medium">{dest.subtitle}</p>
                 </div>
+              </div>
 
-                <div className="p-5 space-y-3.5">
-                  <p className="text-xs sm:text-sm text-brand-muted line-clamp-3 leading-relaxed font-normal">
+              {/* Body */}
+              <div className="p-2.5 sm:p-5 flex flex-col justify-between flex-1 min-w-0">
+                <div className="space-y-1 sm:space-y-3.5">
+                  <div className="sm:hidden">
+                    <h3 className="text-sm font-black text-navy leading-snug truncate">{dest.name}</h3>
+                    <p className="text-[10px] text-brand-muted font-medium truncate">{dest.subtitle}</p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-brand-muted line-clamp-2 leading-relaxed font-normal hidden sm:block">
                     {dest.fullDescription}
                   </p>
 
-                  <div className="space-y-1.5 pt-2">
-                    <span className="text-[11px] font-bold text-brand-muted uppercase tracking-wider block">
+                  <div className="space-y-1 sm:space-y-1.5 pt-0.5 sm:pt-2">
+                    <span className="text-[10px] sm:text-[11px] font-bold text-brand-muted uppercase tracking-wider hidden sm:block">
                       Key Highlights:
                     </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {dest.keyAttractions.map((att, i) => (
+                    <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                      {dest.keyAttractions.slice(0, 1).map((att, i) => (
                         <span
                           key={i}
-                          className="bg-light-blue text-navy text-[11px] px-2.5 py-1 rounded-md font-semibold border border-primary-blue/10"
+                          className="bg-light-blue text-navy text-[10px] sm:hidden px-1.5 py-0.5 rounded font-semibold border border-primary-blue/10 truncate max-w-full"
+                        >
+                          • {att}
+                        </span>
+                      ))}
+                      {dest.keyAttractions.slice(0, 3).map((att, i) => (
+                        <span
+                          key={i}
+                          className="bg-light-blue text-navy text-[11px] px-2.5 py-1 rounded-md font-semibold border border-primary-blue/10 hidden sm:inline-block"
                         >
                           • {att}
                         </span>
@@ -89,21 +101,20 @@ export default function DestinationsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="p-5 pt-0 border-t border-brand-border/60 flex items-center justify-between gap-3 mt-3">
-                <div>
-                  <span className="text-[11px] text-brand-muted block font-medium">Starting from</span>
-                  <span className="text-lg sm:text-xl font-extrabold text-navy">{dest.startingPrice}</span>
+                <div className="pt-2 sm:pt-3 sm:border-t sm:border-brand-border/60 flex items-center justify-between gap-2 mt-1 sm:mt-3">
+                  <span className="text-[10px] sm:text-xs text-brand-muted font-medium">
+                    100% Customized Tour
+                  </span>
+
+                  <Link
+                    href={`/destinations/${dest.slug}`}
+                    className="bg-primary-blue hover:bg-primary-hover text-white font-semibold text-[10px] sm:text-xs h-[30px] sm:h-[38px] px-3 sm:px-4 rounded-lg shadow-xs transition-colors flex items-center gap-1 active:scale-[0.98] whitespace-nowrap"
+                  >
+                    <span>Explore Packages</span>
+                    <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </Link>
                 </div>
-
-                <Link
-                  href={`/destinations/${dest.slug}`}
-                  className="bg-primary-blue hover:bg-primary-hover text-white font-semibold text-xs h-[40px] px-4 rounded-[8px] shadow-xs transition-colors flex items-center gap-1.5 active:scale-[0.98]"
-                >
-                  <span>Explore Packages</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
               </div>
             </div>
           ))}

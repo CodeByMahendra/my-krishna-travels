@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 import { destinationsData } from "@/data/destinations";
 import { tourPackagesData } from "@/data/packages";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import QuickLeadForm from "@/components/home/QuickLeadForm";
 import FinalCTA from "@/components/home/FinalCTA";
 
@@ -39,13 +38,6 @@ export default async function DestinationDetailPage({ params }: Props) {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs
-          items={[
-            { label: "Destinations", href: "/destinations" },
-            { label: dest.name },
-          ]}
-        />
-
         {/* Hero Header Banner */}
         <div className="relative rounded-[14px] overflow-hidden shadow-card mb-12 bg-navy text-white min-h-[360px] flex items-end p-6 sm:p-12">
           <Image
@@ -148,10 +140,12 @@ export default async function DestinationDetailPage({ params }: Props) {
                         <h3 className="text-lg font-bold text-navy group-hover:text-primary-blue transition-colors">{pkg.name}</h3>
                         <p className="text-xs text-brand-muted line-clamp-2 leading-relaxed font-normal">{pkg.description}</p>
                         <div className="pt-2 flex items-center justify-between">
-                          <span className="text-lg font-extrabold text-navy">{pkg.startingPrice}</span>
+                          <span className="text-xs font-semibold text-brand-muted">
+                            100% Customized Itinerary
+                          </span>
                           <Link
                             href={`/packages/${pkg.slug}`}
-                            className="bg-primary-blue hover:bg-primary-hover text-white text-xs font-semibold h-[40px] px-4 rounded-[8px] shadow-xs transition-colors flex items-center justify-center active:scale-[0.98]"
+                            className="bg-primary-blue hover:bg-primary-hover text-white text-xs font-semibold h-[38px] px-4 rounded-[8px] shadow-xs transition-colors flex items-center justify-center active:scale-[0.98]"
                           >
                             View Details & Itinerary
                           </Link>

@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Calendar, Clock, User } from "lucide-react";
 import { blogPostsData } from "@/data/blog";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import FinalCTA from "@/components/home/FinalCTA";
 
@@ -33,13 +32,6 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs
-          items={[
-            { label: "Blog", href: "/blog" },
-            { label: post.title },
-          ]}
-        />
-
         <article className="bg-white rounded-[14px] overflow-hidden shadow-card border border-brand-border p-6 sm:p-12 mb-16 space-y-8">
           <div className="space-y-4">
             <span className="bg-primary-blue text-white text-xs font-semibold px-3.5 py-1 rounded-full uppercase tracking-wider inline-block shadow-xs">

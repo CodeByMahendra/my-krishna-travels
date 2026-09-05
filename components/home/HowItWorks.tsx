@@ -44,24 +44,24 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="bg-light-bg p-6 rounded-[14px] border border-brand-border space-y-4 hover:border-primary-blue/30 transition-all duration-200 shadow-subtle flex flex-col justify-between"
+              className="bg-light-bg p-3.5 sm:p-6 rounded-xl sm:rounded-[14px] border border-brand-border space-y-2 sm:space-y-4 hover:border-primary-blue/30 transition-all duration-200 shadow-subtle flex flex-col justify-between"
             >
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-extrabold text-navy/40 font-mono">
+                <span className="text-lg sm:text-2xl font-extrabold text-navy/40 font-mono">
                   {step.num}
                 </span>
-                <div className="p-2.5 bg-white rounded-lg shadow-xs border border-brand-border">
-                  {step.icon}
+                <div className="p-1.5 sm:p-2.5 bg-white rounded-lg shadow-xs border border-brand-border">
+                  {React.cloneElement(step.icon, { className: "w-4 h-4 sm:w-6 sm:h-6 text-primary-blue" })}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <h3 className="text-lg font-bold text-navy">{step.title}</h3>
-                <p className="text-xs sm:text-sm text-brand-muted leading-relaxed font-normal">{step.desc}</p>
+              <div className="space-y-1 sm:space-y-2">
+                <h3 className="text-xs sm:text-lg font-bold text-navy leading-snug">{step.title}</h3>
+                <p className="text-[11px] sm:text-sm text-brand-muted leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">{step.desc}</p>
               </div>
             </div>
           ))}

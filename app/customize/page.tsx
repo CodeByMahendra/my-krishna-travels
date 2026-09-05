@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import CustomizeTripForm from "@/components/forms/CustomizeTripForm";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import FinalCTA from "@/components/home/FinalCTA";
 
 export const metadata = {
@@ -12,8 +11,6 @@ export default function CustomizePage() {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Customize Your Trip" }]} />
-
         <div className="mb-12">
           <Suspense fallback={<div className="p-8 text-center text-brand-muted">Loading planner...</div>}>
             <CustomizeTripForm />

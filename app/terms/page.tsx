@@ -1,5 +1,4 @@
 import React from "react";
-import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { siteConfig } from "@/lib/config";
 
 export const metadata = {
@@ -11,8 +10,6 @@ export default function TermsPage() {
   return (
     <div className="bg-light-bg min-h-screen py-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Terms & Conditions" }]} />
-
         <div className="bg-white p-8 sm:p-12 rounded-[14px] border border-brand-border shadow-card space-y-6">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-navy border-l-4 border-primary-blue pl-4">
             Terms & Conditions
