@@ -3,7 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Check, ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { MapPin, Check, ArrowRight, Sparkles } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import { tourPackagesData } from "@/data/packages";
 import { getPackageWhatsAppLink } from "@/lib/whatsapp";
 import { trackWhatsAppClick, trackQuoteRequest } from "@/lib/tracking";
@@ -103,7 +104,7 @@ export default function PackagesSection() {
                     onClick={() => trackWhatsAppClick(`PackageCard-${pkg.slug}`)}
                     className="bg-brand-whatsapp hover:bg-brand-whatsappHover text-white px-3 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-colors"
                   >
-                    <MessageCircle className="w-3.5 h-3.5 fill-current stroke-none" />
+                    <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
                     <span>WhatsApp</span>
                   </a>
                 </div>

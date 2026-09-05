@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Calculator, Users, Hotel, Car, Sparkles, MessageCircle, ShieldCheck, ArrowRight, IndianRupee } from "lucide-react";
+import { Calculator, Users, Hotel, Car, Sparkles, ShieldCheck, ArrowRight, IndianRupee } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { trackWhatsAppClick } from "@/lib/tracking";
 
@@ -312,7 +313,7 @@ export default function TripCostCalculator() {
                 onClick={handleLockPriceWhatsApp}
                 className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold h-[48px] rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98] text-xs sm:text-sm"
               >
-                <MessageCircle className="w-4 h-4 fill-current stroke-none" />
+                <WhatsAppIcon className="w-4 h-4 text-white" />
                 <span>Lock This Price on WhatsApp</span>
               </button>
 

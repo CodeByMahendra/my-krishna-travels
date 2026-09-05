@@ -13,7 +13,6 @@ import {
   CheckCircle2,
   ArrowLeft,
   ArrowRight,
-  MessageCircle,
   Clock,
   User,
   UserCheck,
@@ -22,6 +21,8 @@ import {
   Check,
   Sun
 } from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
+import DestinationAutocomplete from "@/components/common/DestinationAutocomplete";
 import { getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
@@ -315,7 +316,7 @@ export default function CustomizeTripForm() {
               onClick={handleWhatsApp}
               className="w-full bg-brand-whatsapp hover:bg-brand-whatsappHover text-white font-semibold h-[48px] rounded-[8px] shadow-xs flex items-center justify-center gap-2 transition-colors active:scale-[0.98] text-sm sm:text-base"
             >
-              <MessageCircle className="w-5 h-5 fill-current stroke-none" />
+              <WhatsAppIcon className="w-5 h-5 text-white" />
               <span>Connect on WhatsApp Immediately</span>
             </button>
 
@@ -347,22 +348,23 @@ export default function CustomizeTripForm() {
                 </div>
               </div>
 
-              {/* Destination Search Box */}
+              {/* Destination Search Box with Live Auto-Fetch */}
               <div>
-                <label className="block text-xs font-semibold text-brand-dark mb-1.5">
-                  Type Destination Name *
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Kashmir, Manali, Goa, Dubai, Bali..."
-                    value={formData.destination}
-                    onChange={(e) => updateField("destination", e.target.value)}
-                    className="w-full h-[48px] pl-11 pr-4 rounded-[8px] border border-brand-border focus:outline-none focus:ring-2 focus:ring-primary-blue text-sm font-semibold text-brand-dark"
-                  />
-                  <MapPin className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Search City, State, or Country *
+                  </label>
+                  <span className="text-[11px] font-bold text-primary-blue bg-light-blue px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span>⚡</span>
+                    <span>Live Auto-Fetch</span>
+                  </span>
                 </div>
+                <DestinationAutocomplete
+                  value={formData.destination}
+                  onChange={(val) => updateField("destination", val)}
+                  onSelect={(val) => updateField("destination", val)}
+                  placeholder="Type any City, State, or Country (e.g. Gujarat, Manali, Dubai, Paris...)"
+                />
               </div>
 
               {/* Visual Popular Destination Cards */}

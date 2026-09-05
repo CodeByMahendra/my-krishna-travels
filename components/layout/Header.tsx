@@ -32,7 +32,6 @@ export default function Header() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Destinations", href: "/destinations" },
     { name: "Packages", href: "/packages" },
     { name: "Customize Trip", href: "/customize", badge: "AI PLAN" },
     { name: "About Us", href: "/about" },
@@ -71,20 +70,20 @@ export default function Header() {
       <nav
         className={`w-full bg-white transition-all duration-200 ${
           isScrolled
-            ? "shadow-nav py-2 border-b border-slate-200/90"
-            : "border-b border-slate-100 py-3 md:py-3.5"
+            ? "shadow-nav py-1.5 border-b border-slate-200/90"
+            : "border-b border-slate-100 py-2 md:py-2.5"
         }`}
       >
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[56px] md:h-[64px]">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[64px] md:h-[76px]">
           {/* LEFT: Official Brand Logo */}
           <Link href="/" className="flex items-center shrink-0">
-            <div className="relative h-11 w-44 sm:h-13 sm:w-52 flex items-center">
+            <div className="relative h-[52px] w-[190px] sm:h-[62px] sm:w-[230px] md:h-[72px] md:w-[270px] flex items-center">
               <Image
                 src="/images/logo.png"
                 alt="My Krishna Travels.in"
                 fill
                 priority
-                className="object-contain object-left transition-transform duration-200 hover:scale-[1.02]"
+                className="object-contain object-left transition-transform duration-200 hover:scale-[1.03]"
               />
             </div>
           </Link>
@@ -119,21 +118,22 @@ export default function Header() {
 
           {/* RIGHT CTAs */}
           <div className="hidden sm:flex items-center gap-2.5">
-            {/* Sleek, Compact WhatsApp Button */}
+            {/* Sleek WhatsApp Button with Real WhatsApp Icon */}
             <WhatsAppButton
               variant="button"
               text="WhatsApp"
               source="Header"
-              className="h-[36px] px-3 text-xs font-semibold rounded-[6px] shadow-2xs hover:bg-emerald-600"
+              className="h-[38px] px-3.5 text-xs sm:text-sm font-bold rounded-lg shadow-[0_2px_10px_rgba(37,211,102,0.28)] hover:shadow-[0_4px_14px_rgba(37,211,102,0.42)] transition-all duration-200 active:scale-[0.98]"
             />
 
-            {/* Primary Plan My Trip CTA */}
+            {/* Premium Plan My Trip CTA */}
             <Link
               href="/customize"
-              className="bg-primary-blue hover:bg-primary-hover text-white text-xs sm:text-sm font-semibold h-[38px] px-4 rounded-[6px] transition-colors flex items-center gap-1.5 shadow-xs active:scale-[0.98]"
+              className="group relative overflow-hidden bg-gradient-to-r from-primary-blue via-[#1070e3] to-indigo-600 hover:from-primary-hover hover:via-primary-blue hover:to-indigo-700 text-white text-xs sm:text-sm font-bold h-[38px] px-4 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-[0_2px_10px_rgba(11,99,206,0.32)] hover:shadow-[0_4px_16px_rgba(11,99,206,0.45)] active:scale-[0.98]"
             >
-              <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>Plan My Trip</span>
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out pointer-events-none" />
+              <Compass className="w-4 h-4 text-amber-300 group-hover:rotate-45 transition-transform duration-300 shrink-0" />
+              <span className="tracking-wide">Plan My Trip</span>
             </Link>
           </div>
 
@@ -156,11 +156,11 @@ export default function Header() {
         <>
           {/* Overlay backdrop */}
           <div
-            className="lg:hidden fixed inset-0 top-[56px] bg-black/50 backdrop-blur-xs z-40 animate-in fade-in duration-200"
+            className="lg:hidden fixed inset-0 top-[64px] bg-black/50 backdrop-blur-xs z-40 animate-in fade-in duration-200"
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          <div className="lg:hidden fixed inset-x-0 top-[56px] bg-white z-50 shadow-2xl border-b border-slate-200 animate-in slide-in-from-top duration-250 max-h-[calc(100vh-65px)] overflow-y-auto rounded-b-2xl">
+          <div className="lg:hidden fixed inset-x-0 top-[64px] bg-white z-50 shadow-2xl border-b border-slate-200 animate-in slide-in-from-top duration-250 max-h-[calc(100vh-64px)] overflow-y-auto rounded-b-2xl">
             <div className="px-5 pt-4 pb-8 space-y-2">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
@@ -187,12 +187,12 @@ export default function Header() {
               <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
                 <Link
                   href="/customize"
-                  className="w-full bg-primary-blue hover:bg-primary-hover text-white font-bold h-[48px] rounded-xl flex items-center justify-center gap-2 text-sm shadow-md active:scale-[0.98]"
+                  className="w-full bg-gradient-to-r from-primary-blue via-[#1070e3] to-indigo-600 hover:from-primary-hover hover:to-indigo-700 text-white font-bold h-[48px] rounded-xl flex items-center justify-center gap-2 text-sm shadow-[0_4px_14px_rgba(11,99,206,0.3)] active:scale-[0.98] transition-all"
                 >
                   <Compass className="w-5 h-5 text-amber-300" />
                   <span>Plan My Trip</span>
                 </Link>
-                <WhatsAppButton variant="accent" text="WhatsApp Us" source="MobileDrawer" className="w-full h-[48px] rounded-xl text-sm font-bold shadow-md" />
+                <WhatsAppButton variant="accent" text="WhatsApp Us" source="MobileDrawer" className="w-full h-[48px] rounded-xl text-sm font-bold shadow-[0_4px_14px_rgba(37,211,102,0.3)]" />
               </div>
 
               <div className="pt-4 text-xs text-slate-500 space-y-1.5 text-center font-medium bg-slate-50 p-3 rounded-xl border border-slate-100 mt-2">
