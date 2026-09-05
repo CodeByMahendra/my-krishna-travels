@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Sparkles, Send, CheckCircle2, MapPin } from "lucide-react";
 import WhatsAppIcon from "@/components/common/WhatsAppIcon";
+import DestinationAutocomplete from "@/components/common/DestinationAutocomplete";
 import { getEnquiryWhatsAppLink } from "@/lib/whatsapp";
 import { trackLead, trackWhatsAppClick } from "@/lib/tracking";
 import { getStoredUTMParams } from "@/lib/utm";
@@ -61,7 +62,7 @@ export default function QuickLeadForm() {
   };
 
   return (
-    <div className="bg-white rounded-xl sm:rounded-3xl shadow-xl p-2.5 sm:p-5 md:p-6 border border-slate-100 relative text-slate-800 overflow-hidden">
+    <div className="bg-white rounded-xl sm:rounded-3xl shadow-xl p-2.5 sm:p-5 md:p-6 border border-slate-100 relative text-slate-800">
       <div className="flex items-center gap-1 mb-0.5 sm:mb-1">
         <span className="text-brand-red bg-brand-red-light p-0.5 rounded">
           <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -140,23 +141,18 @@ export default function QuickLeadForm() {
             </div>
           </div>
 
-          {/* Row 2: Destination */}
+          {/* Row 2: Destination with Live Autocomplete Suggestions */}
           <div>
             <label className="block text-[10px] sm:text-[11px] font-bold text-slate-700 mb-0.5">
               Where to? (Destination) *
             </label>
-            <div className="relative">
-              <input
-                type="text"
-                name="destination"
-                required
-                placeholder="e.g. Mathura, Vrindavan, Kashmir, Goa..."
-                value={formData.destination}
-                onChange={handleChange}
-                className="w-full h-[32px] sm:h-[40px] pl-7 pr-2 sm:pl-9 sm:pr-3 rounded-lg sm:rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-brand-red text-[11px] sm:text-xs font-semibold text-slate-800 placeholder:text-slate-400 bg-white"
-              />
-              <MapPin className="w-3 h-3 text-slate-400 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
+            <DestinationAutocomplete
+              value={formData.destination}
+              onChange={(val) => setFormData((prev) => ({ ...prev, destination: val }))}
+              placeholder="e.g. Mathura, Vrindavan, Kashmir, Goa..."
+              required
+              compact
+            />
           </div>
 
           {/* Row 3: Travel Date & Travellers (2-col) */}
